@@ -3,8 +3,41 @@ body, html {
 	height: 100%;
 }
 ion-side-menu {
-	background-color: #a9a9a9;
+	background-color: #222;
 }
+
+/* main page */
+ion-item.item-complex {
+    color: #e0e0e0;
+}
+ion-item.item-complex .name-de {
+    font-weight: bold;
+}
+ion-item.item-complex .name-bo {
+    font-style: italic;
+    padding-left: 15px;
+}
+ion-item.item-complex .statistics-quot {
+    position: absolute;
+    right: 0px;
+    padding-right: 5px;
+    font-style: italic;
+    font-weight: bold;
+}
+ion-item.item-complex img {
+    padding-right: 10px;
+}
+ion-item.item-complex span {
+    border-left: 1px double rgba(100, 100, 130, .5) !important;
+    padding-left: 10px;
+}
+ion-item.item-complex:nth-child(odd) > a{
+    background-color: rgb(70, 70, 77) !important;
+}
+ion-item.item-complex:nth-child(even) > a{
+    background-color: rgb(84, 84, 93) !important;
+}
+/* end main page */
 
 /* imageswitch */
 imageswitch .slider{
@@ -38,32 +71,68 @@ imageswitch .scroll {
 
 /* wood-data-table used multiple times */
 .wood-data-table {
+    margin: 5px;
 	font-size: 16px;
+}
+.wood-data-table tr:nth-child(even){
+    background-color: rgb(70, 70, 77);
+}
+.wood-data-table tr:nth-child(odd){
+    background-color: rgb(84, 84, 93);
 }
 .wood-data-table td {
 	border-bottom: 1px solid #fff;
+    padding: 4px;
 }
 .wood-data-table td:nth-child(1) {
-	width: 90px;
+	width: 110px;
+    font-weight: bold;
+    border-right: 1px double rgba(100, 100, 130, .5);
 }
 
 .wood-data-table td:nth-child(2) {
-	color: #b2b2b2;
-	padding-left:5px;
+    color: rgb(240, 243, 248);
 }
 
 
 /* wood page */
-.wood-images {
+
+ion-view.pane {
+    background-color: rgb(70, 70, 77) !important;
+}
+ion-view.pane .wood-name {
+    margin: 7px;
+    font-weight: bold;
+	float: left;
+}
+ion-view.pane button#openImages {
+	float: right;
+    margin: 5px 3px;
+    padding 0px 4px;
+    font-weight: bold;
+    color: #e0e0e0;
+    background-color: rgb(84, 84, 93) !important;
+    border: 2px solid rgb(185, 185, 198) !important;
+}
+
+ion-view.pane .wood-images {
 	/*margin-top: 50px;*/
 	height: calc(100% - 115px);
 }
-.wood-name {
-	float: left;
+/* end wood page */
+
+/* start training page */
+
+ion-view.pane button#start-training {
+    margin: 5px 3px;
+    padding 0px 4px;
+    font-weight: bold;
+    color: #e0e0e0;
+    background-color: rgb(97, 97, 106) !important;
+    border: 2px solid rgb(185, 185, 198) !important;
 }
-#openImages {
-	float: right;
-}
+
+/* end start training page */
 
 /* question page */
 .question-wood-images {
