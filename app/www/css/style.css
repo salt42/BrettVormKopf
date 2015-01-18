@@ -1,0 +1,119 @@
+/* generel */
+body, html {
+	height: 100%;
+}
+ion-side-menu {
+	background-color: #a9a9a9;
+}
+
+/* imageswitch */
+imageswitch .slider{
+	height: 100%;
+	overflow: scroll;
+}
+imageswitch ion-slide {
+	width: 100%;
+	text-align: center;
+}
+imageswitch img{
+	margin: 0 2.5% 0 2.5%;
+	max-height: 95%;
+	max-width: 95%;
+}
+imageswitch .images {
+	height: 100%;
+	width: 100%;
+}
+imageswitch .img-container {
+	display: none;
+	height: calc(100% - 20px);
+}
+imageswitch .ionic-scroll {
+	height: 100%;
+}
+imageswitch .scroll {
+	height: 100%;
+}
+/* end imageswitch */
+
+/* wood-data-table used multiple times */
+.wood-data-table {
+	font-size: 16px;
+}
+.wood-data-table td {
+	border-bottom: 1px solid #fff;
+}
+.wood-data-table td:nth-child(1) {
+	width: 90px;
+}
+
+.wood-data-table td:nth-child(2) {
+	color: #b2b2b2;
+	padding-left:5px;
+}
+
+
+/* wood page */
+.wood-images {
+	/*margin-top: 50px;*/
+	height: calc(100% - 115px);
+}
+.wood-name {
+	float: left;
+}
+#openImages {
+	float: right;
+}
+
+/* question page */
+.question-wood-images {
+	height: calc(100% - 115px);
+}
+.question-wood-images .wood-description {
+	display: none;
+}
+.multiple-choice-answer-list {
+	float:left;
+	width: 70%;
+	padding: 0 0 0 2.5%;
+}
+.multiple-choice-answer {
+/*	height: 40px;*/
+}
+.multiple-choice-answer .item-content {
+	padding: 5px;
+}
+.multiple-choice-answer .radio-icon {
+	padding: 0 10px 0 0;
+	float: right;
+}
+@media screen and (max-height: 1900px) {
+	/* smaller than 300px */
+	.multiple-choice-answer {
+/*		display: none;*/
+	}
+}
+#infoButton {
+	display: none;
+	white-space: nowrap;
+	float: right;
+	width: 25%;
+	min-height: 20px;
+	margin-right: 2.5%;
+}
+#nextButton {
+	display: none;
+	white-space: nowrap;
+	float: right;
+	width: 25%;
+	min-height: 20px;
+	margin-right: 2.5%;
+}
+
+/* training conf page */
+.button.start-training {
+	position: absolute;
+	left: 50%;
+	bottom: 10px;
+	transform: translate(-50%);
+}

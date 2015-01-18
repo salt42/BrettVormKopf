@@ -1,0 +1,50 @@
+<ion-view title="Wood">
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+	</ion-nav-buttons>
+	<ion-content class="has-header" scroll="false">
+		<h1 class="wood-name">{{wood.name_de}}</h1>
+		<button id="openImages" class="button button-balanced" ng-click="switch()">Bilder</button>
+		<hr style="clear:both;">
+		<div class="wood-description">
+			<table class="wood-data-table">
+				<tr>
+					<td>Botanisch</td>
+					<td>{{wood.name_bo}}</td>
+				</tr>
+				
+				<tr>
+					<td>Holzart </td>
+					<td ng-switch on="wood.woodtype">
+						<span ng-switch-when="Nh">
+							Nadelholz
+						</span>
+						<span ng-switch-default>
+							Laubholz
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td>Holz</td>
+					<td>{{wood.m_holz}}</td>
+				</tr>
+				<tr>
+					<td>frisches Holz</td>
+					<td>{{wood.m_frisch}}</td>
+				</tr>
+				<tr>
+					<td>Rinde</td>
+					<td>{{wood.m_rinde}}</td>
+				</tr>
+				<tr>
+					<td>Ähnlich</td>
+					<td>{{wood.confusion}}</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div class="wood-images">
+			<imageswitch wood-id="wood.id" random="false"></imageswitch>
+		</div>
+	</ion-content>
+</ion-view>

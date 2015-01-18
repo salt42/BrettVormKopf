@@ -1,0 +1,156 @@
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+
+// Colors
+// -------------------------------
+
+$light:                           #a9a9a9 !default;
+$stable:                          #868686 !default;
+$positive:                        #4a87ee !default;
+$calm:                            #43cee6 !default;
+$balanced:                        #66cc33 !default;
+$energized:                       #f0b840 !default;
+$assertive:                       #ef4e3a !default;
+$royal:                           #8a6de9 !default;
+$dark:                            #444 !default;
+
+
+// Base
+// -------------------------------
+
+$base-background-color:           #676767 !default;
+$base-color:                      #e2e2e2 !default;
+
+
+// Buttons
+// -------------------------------
+
+$button-color:                    #222 !default;
+
+$button-light-bg:                 $light !default;
+$button-light-text:               #444 !default;
+$button-light-border:             #ddd !default;
+$button-light-active-bg:          #fafafa !default;
+$button-light-active-border:      #ccc !default;
+
+$button-stable-bg:                $stable !default;
+$button-stable-text:              #444 !default;
+$button-stable-border:            #b2b2b2 !default;
+$button-stable-active-bg:         #e5e5e5 !default;
+$button-stable-active-border:     #a2a2a2 !default;
+
+$button-positive-bg:              $positive !default;
+$button-positive-text:            #fff !default;
+$button-positive-border:          darken($positive, 15%) !default;
+$button-positive-active-bg:       darken($positive, 15%) !default;
+$button-positive-active-border:   darken($positive, 15%) !default;
+
+$button-calm-bg:                  $calm !default;
+$button-calm-text:                #fff !default;
+$button-calm-border:              darken($calm, 15%) !default;
+$button-calm-active-bg:           darken($calm, 15%) !default;
+$button-calm-active-border:       darken($calm, 15%) !default;
+
+$button-assertive-bg:             $assertive !default;
+$button-assertive-text:           #fff !default;
+$button-assertive-border:         darken($assertive, 15%) !default;
+$button-assertive-active-bg:      darken($assertive, 15%) !default;
+$button-assertive-active-border:  darken($assertive, 15%) !default;
+
+$button-balanced-bg:              $balanced !default;
+$button-balanced-text:            #000 !default;
+$button-balanced-border:          darken($balanced, 15%) !default;
+$button-balanced-active-bg:       darken($balanced, 15%) !default;
+$button-balanced-active-border:   darken($balanced, 15%) !default;
+
+$button-energized-bg:             $energized !default;
+$button-energized-text:           #fff !default;
+$button-energized-border:         darken($energized, 15%) !default;
+$button-energized-active-bg:      darken($energized, 15%) !default;
+$button-energized-active-border:  darken($energized, 15%) !default;
+
+$button-royal-bg:                 $royal !default;
+$button-royal-text:               #fff !default;
+$button-royal-border:             darken($royal, 15%) !default;
+$button-royal-active-bg:          darken($royal, 15%) !default;
+$button-royal-active-border:      darken($royal, 15%) !default;
+
+$button-dark-bg:                  $dark !default;
+$button-dark-text:                #fff !default;
+$button-dark-border:              #111 !default;
+$button-dark-active-bg:           #262626 !default;
+$button-dark-active-border:       #000 !default;
+
+$button-default-bg:               $button-stable-bg !default;
+$button-default-text:             $button-stable-text !default;
+$button-default-border:           $button-stable-border !default;
+$button-default-active-bg:        $button-stable-active-bg !default;
+$button-default-active-border:    $button-stable-active-border !default;
+
+
+// Menus
+// -------------------------------
+
+$menu-bg:                         $base-background-color !default;
+$menu-width:                      275px !default;
+$menu-animation-speed:            200ms !default;
+
+$menu-side-shadow:                -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !default;
+
+
+// Items
+// -------------------------------
+
+$item-font-size:                  16px !default;
+$item-border-width:               1px !default;
+$item-padding:                    16px !default;
+
+$item-button-font-size:           18px !default;
+$item-button-line-height:         32px !default;
+$item-icon-font-size:             32px !default;
+$item-icon-fill-font-size:        28px !default;
+
+$item-icon-accessory-color:       #ccc !default;
+$item-icon-accessory-font-size:   16px !default;
+
+$item-avatar-width:               40px !default;
+$item-avatar-height:              40px !default;
+$item-avatar-border-radius:       4px !default;
+
+$item-thumbnail-width:            80px !default;
+$item-thumbnail-height:           80px !default;
+$item-thumbnail-margin:           10px !default;
+
+$item-divider-bg:                 #f5f5f5 !default;
+$item-divider-color:              #222 !default;
+$item-divider-padding:            5px 15px !default;
+
+
+$item-default-active-bg:          $light !default;
+
+
+
+
+// Include all of Ionic
+@import "../www/lib/ionic/scss/ionic";
+
+.item-radio input {
+  /* hide any radio button inputs elements (the ugly circles) */
+  position: absolute;
+  left: -9999px;
+
+  &:checked ~ .item-content {
+    /* style the item content when its checked */
+    background: $light;
+  }
+
+  &:checked ~ .radio-icon {
+    /* show the checkmark icon when its checked */
+    visibility: visible;
+  }
+}
+.item-complex .item-content,
+.item-radio .item-content {
+  background-color: $stable;
+}

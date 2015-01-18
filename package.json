@@ -1,0 +1,10 @@
+{
+  "name": "brettvormkopfServer",
+  "version": "1.0.0",
+  "description": "serer for BrettVromKopf app",
+  "author": "salt <boluuuu@gmail.com>",
+
+  "dependencies": {
+    "express": "4.2.x",
+  }
+}
