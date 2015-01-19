@@ -37,7 +37,9 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
     }, 1000);
   };
 });
+app.controller('HomeCtrl', function($scope) {
 
+});
 app.controller('WoodsCtrl', function($scope, woodGrabber) {
 	woodGrabber.getWoods(function(woods) {
 		$scope.woods = woods;
