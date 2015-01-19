@@ -40,6 +40,10 @@ ion-item.item-complex:nth-child(even) > a{
 /* end main page */
 
 /* imageswitch */
+imageswitch .button-overlay {
+	position: absolute;
+	z-index: 100;
+}
 imageswitch .slider{
 	height: 100%;
 	overflow: scroll;

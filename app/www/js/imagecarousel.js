@@ -8,7 +8,13 @@ app.directive('imageswitch', function factory($timeout, woodGrabber) {
 			woodId: '=',
 			random: '='
 		},
-		template: 	'<ion-slide-box active-slide="activeSlide" on-slide-changed="slideHasChanged($index)" does-continue="true" show-pager="true">' +
+		template: 	'<div class="button-overlay">' +
+						'<div class="button up" ng-click="moveTypeImages(-1)">up</div>' +
+						'<div class="button down" ng-click="moveTypeImages(1)">down</div>' +
+						'<div class="button left" ng-click="moveType(-1)">left</div>' +
+						'<div class="button right" ng-click="moveType(1)">right</div>' +
+					'</div>' +
+					'<ion-slide-box active-slide="activeSlide" on-slide-changed="slideHasChanged($index)" does-continue="true" show-pager="true">' +
 						'<ion-slide>' +
 							'<span>{{images[0].name}}</span> ' +
 							'<span>{{images[0].current}} / {{images[0].count}}</span>' +
@@ -85,9 +91,9 @@ app.directive('imageswitch', function factory($timeout, woodGrabber) {
 							imgId = Math.floor(Math.random() * imgCount) + 1;
 						}
 						$('.img-container:nth-child(' + imgId + ')').show();
-						$scope.images[0].current = imgId;
-						$scope.images[1].current = imgId;
-						$scope.images[2].current = imgId;
+						scope.images[0].current = imgId;
+						scope.images[1].current = imgId;
+						scope.images[2].current = imgId;
 					},100);
 				});
 		    });
@@ -99,8 +105,15 @@ app.directive('imageswitch', function factory($timeout, woodGrabber) {
 				imageTypesClasses = ['.across-images', '.profile-images','.bark-images' ];
 
 			$scope.slideBoxDelegate = $ionicSlideBoxDelegate;
-
-			function moveTypeImages(direction) {
+			$scope.moveType = function(direction) {
+				console.log('nice')
+				if (direction < 0) {
+					$ionicSlideBoxDelegate.previous();
+				} else {
+					$ionicSlideBoxDelegate.next();
+				}
+			};
+			$scope.moveTypeImages = function(direction) {
 				var activeIndex = 0,
 					imgContainer = $(imageTypesClasses[currentImageType] + ' .img-container'),
 					i = 0;
@@ -123,21 +136,25 @@ app.directive('imageswitch', function factory($timeout, woodGrabber) {
 						activeIndex = imgContainer.length - 1;
 					}
 				}
+				// komisch wenn ich die nachste zeile in den callback darunter schieb
+				// gehts nich mehr mit den buttons, aber ohne $scope.$apply gehts garnich
+				$scope.images[currentImageType].current = activeIndex + 1;
 				$scope.$apply(function () {
-					$scope.images[currentImageType].current = activeIndex + 1;
+				//	$scope.images[currentImageType].current = activeIndex + 1;
 				});
+
 				$(imageTypesClasses[currentImageType] + ' .img-container:nth-child(' + (activeIndex + 1) + ')').show();
 
-			}
+			};
 
 			$ionicGesture.on('swipedown', function (event) {
 				//show next image type
-				moveTypeImages(1);
+				$scope.moveTypeImages(1);
 			}, $element);
 
 			$ionicGesture.on('swipeup', function (event) {
 				//show next image type
-				moveTypeImages(-1);
+				$scope.moveTypeImages(-1);
 			}, $element);
 			$scope.slideHasChanged = function(index) {
 				currentImageType = index;

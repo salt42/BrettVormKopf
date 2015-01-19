@@ -8885,6 +8885,7 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 
 .item-complex .item-content,
 .item-radio .item-content {
-  background-color: #868686; }
+  /*background-color: #868686; */
+}
 
 /*# sourceMappingURL=app.css.map */
