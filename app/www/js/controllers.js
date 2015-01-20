@@ -37,7 +37,9 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
     }, 1000);
   };
 });
+app.controller('HomeCtrl', function($scope) {
 
+});
 app.controller('WoodsCtrl', function($scope, woodGrabber) {
 	woodGrabber.getWoods(function(woods) {
 		$scope.woods = woods;
@@ -46,7 +48,7 @@ app.controller('WoodsCtrl', function($scope, woodGrabber) {
 
 app.controller('WoodCtrl', function($scope, $stateParams, woodGrabber, $timeout) {
 	woodGrabber.getWoodByID($stateParams.woodid, function(wood) {
-		$scope.wood = wood;
+		$scope.Wood = wood;
 	});
 	$scope.switch = function() {
 		var $desc = $('.wood-description');
@@ -89,7 +91,7 @@ app.controller('QuestionCtrl', function($scope, woodGrabber, $state, $stateParam
 	$scope.changeAnswer = function(item) {
 		if (answered) {
 			//change images
-			$scope.currentWood = $scope.woods[item.value];
+			$scope.Wood = $scope.woods[item.value];
 			$scope.woodImagesId = item.value;
 			return;
 		}
@@ -138,7 +140,7 @@ app.controller('QuestionCtrl', function($scope, woodGrabber, $state, $stateParam
 	}
 	//load data from training module
 	trainingCenter.getQuestion(function(question) {
-		$scope.currentWood = question.wood;
+		$scope.Wood = question.wood;
 		$scope.answerwood = question.wood;
 		$scope.multipleChoiceList = question.posibleAnswers;
 	});

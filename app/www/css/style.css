@@ -112,7 +112,7 @@ ion-view.pane .wood-name {
 ion-view.pane button#openImages {
 	float: right;
     margin: 5px 3px;
-    padding 0px 4px;
+    padding: 0px 4px;
     font-weight: bold;
     color: #e0e0e0;
     background-color: rgb(84, 84, 93) !important;
@@ -129,7 +129,7 @@ ion-view.pane .wood-images {
 
 ion-view.pane button#start-training {
     margin: 5px 3px;
-    padding 0px 4px;
+    padding: 0px 4px;
     font-weight: bold;
     color: #e0e0e0;
     background-color: rgb(97, 97, 106) !important;
