@@ -125,6 +125,56 @@ ion-view.pane .wood-images {
 }
 /* end wood page */
 
+/* start wood images button-overlay */
+
+.button-overlay {
+    position: absolute;
+    pointer-events: none;
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+    border: 5px solid red;
+}
+.button-overlay .button {
+    position: absolute;
+    text-align: center;
+    width: 74px;
+    height: 40px;
+    font-weight: bold;
+    color: #e0e0e0;
+    background-color: rgb(84, 84, 93) !important;
+    border: 2px solid rgb(185, 185, 198) !important;
+}
+.button-overlay .button.right {
+    pointer-events: all;
+    right: 10px;
+    top: 50%;
+    margin-top: -25px;
+}
+
+.button-overlay .button.left {
+    pointer-events: all;
+    left: 10px;
+    top: 50%;
+    margin-top: -25px;
+}
+
+.button-overlay .button.up {
+    pointer-events: all;
+    left: 50%;
+    top: 10px;
+    margin-left: -37px;
+}
+
+.button-overlay .button.down {
+    pointer-events: all;
+    left: 50%;
+    bottom: 10px;
+    margin-left: -37px;
+}
+
+/* end wood images button-overlay */
+
 /* start training page */
 
 ion-view.pane button#start-training {
@@ -136,7 +186,7 @@ ion-view.pane button#start-training {
     border: 2px solid rgb(185, 185, 198) !important;
 }
 
-/* end start training page */
+/* end training page */
 
 /* question page */
 .question-wood-images {

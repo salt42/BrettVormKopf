@@ -96,13 +96,16 @@ app.directive('imageswitch', function factory($timeout, woodGrabber) {
 						scope.images[2].current = imgId;
 					},100);
 				});
+                scope.updateNavigationButtons();
 		    });
 
 		},
 		controller: function($scope, $element, $ionicGesture, $ionicSlideBoxDelegate) {
 			var answerID,
 				currentImageType = 0,
-				imageTypesClasses = ['.across-images', '.profile-images','.bark-images' ];
+				imageTypesClasses = ['.across-images', '.profile-images','.bark-images' ],
+                imageTypesNames = ['Längs', 'Quer', 'Rinde'],
+                imageTypesNamesEngl = ['longi', 'profile', 'bark'];
 
 			$scope.slideBoxDelegate = $ionicSlideBoxDelegate;
 			$scope.moveType = function(direction) {
@@ -158,7 +161,20 @@ app.directive('imageswitch', function factory($timeout, woodGrabber) {
 			}, $element);
 			$scope.slideHasChanged = function(index) {
 				currentImageType = index;
+                $scope.updateNavigationButtons();
 			};
+            $scope.updateNavigationButtons = function(){
+                var next = 0,
+                    prev = imageTypesNames.length - 1;
+                if(currentImageType + 1 < imageTypesNames.length){
+                    next = currentImageType + 1;
+                }
+                if(currentImageType - 1 >= 0){
+                    prev = currentImageType - 1;
+                }
+                $('.button-overlay .button.right').html(imageTypesNames[next]);
+                $('.button-overlay .button.left').html(imageTypesNames[prev]);
+            };
 		}
 	};
 	return directiveDefinitionObject;
