@@ -109,7 +109,7 @@ ion-view.pane .wood-name {
     font-weight: bold;
 	float: left;
 }
-ion-view.pane button#openImages {
+#openImages {
 	float: right;
     margin: 5px 3px;
     padding: 0px 4px;
