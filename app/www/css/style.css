@@ -176,7 +176,7 @@ ion-view.pane .wood-images {
 
 /* start training page */
 
-ion-view.pane button#start-training {
+#start-training {
     margin: 5px 3px;
     padding: 0px 4px;
     font-weight: bold;
