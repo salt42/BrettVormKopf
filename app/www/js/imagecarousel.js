@@ -9,8 +9,8 @@ app.directive('imageswitch', function factory($timeout, woodGrabber) {
 			random: '='
 		},
 		template: 	'<div class="button-overlay">' +
-						'<div class="button up" ng-click="moveTypeImages(-1)">up</div>' +
-						'<div class="button down" ng-click="moveTypeImages(1)">down</div>' +
+						'<div class="button up ion-arrow-up-b" ng-click="moveTypeImages(-1)"></div>' +
+						'<div class="button down ion-arrow-down-b" ng-click="moveTypeImages(1)"></div>' +
 						'<div class="button left" ng-click="moveType(-1)">left</div>' +
 						'<div class="button right" ng-click="moveType(1)">right</div>' +
 					'</div>' +

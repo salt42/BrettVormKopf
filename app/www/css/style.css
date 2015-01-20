@@ -132,44 +132,45 @@ ion-view.pane .wood-images {
     pointer-events: none;
     width: 100%;
     top: 0px;
-    bottom: 0px;
+    bottom: 140px;
 }
 .button-overlay .button {
     position: absolute;
     text-align: center;
-    width: 74px;
+    width: 78px;
     height: 40px;
     font-weight: bold;
     color: #e0e0e0;
     background-color: rgb(84, 84, 93) !important;
     border: 2px solid rgb(185, 185, 198) !important;
+    overflow: hide;
 }
 .button-overlay .button.right {
     pointer-events: all;
-    right: 10px;
-    top: 50%;
-    margin-top: -25px;
+    right: 20px;
+    bottom: 25px;
 }
 
 .button-overlay .button.left {
     pointer-events: all;
-    left: 10px;
-    top: 50%;
-    margin-top: -25px;
+    right: 154px;
+    bottom: 25px;
 }
 
 .button-overlay .button.up {
     pointer-events: all;
-    left: 50%;
-    top: 10px;
-    margin-left: -37px;
+    right: 100px;
+    bottom: 50px;
+    font-size: 2em;
+    width: 30px;
 }
 
 .button-overlay .button.down {
     pointer-events: all;
-    left: 50%;
-    bottom: 10px;
-    margin-left: -37px;
+    right: 100px;
+    bottom: 0px;
+    font-size: 2em;
+    width: 30px;
 }
 
 /* end wood images button-overlay */
