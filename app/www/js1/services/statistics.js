@@ -1,3 +1,17 @@
+/*
+also von anfang bis ende
+jede neue frage erstellt ein frage obj auf nem stack
+die wird mit den antworten erweitert und dann kommt die nächste
+der stack wird dann cronjob mässig geparsed und in die statistik gerechnet
+
+auserdem wird für jedes holz eine kleine extra statistik geführt.
+da steht dann drin wie gut man des stück beherscht
+
+die generele statistik: da stellt sich mir die frage wo da der mehrwert is weil des wichtigste is eigentlich
+zu wissen wie gut man die einzelnen hölzer kann
+
+ */
+
 app.factory('statistics', function() {
 	//localStorage.clear();
 	var _stats = loadStats();

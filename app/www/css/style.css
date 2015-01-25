@@ -40,35 +40,35 @@ ion-item.item-complex:nth-child(even) > a{
 /* end main page */
 
 /* imageswitch */
-imageswitch .button-overlay {
+imagecarousel .button-overlay {
 	position: absolute;
 	z-index: 100;
 }
-imageswitch .slider{
+imagecarousel .slider{
 	height: 100%;
 	overflow: scroll;
 }
-imageswitch ion-slide {
+imagecarousel ion-slide {
 	width: 100%;
 	text-align: center;
 }
-imageswitch img{
+imagecarousel img{
 	margin: 0 2.5% 0 2.5%;
 	max-height: 95%;
 	max-width: 95%;
 }
-imageswitch .images {
+imagecarousel .images {
 	height: 100%;
 	width: 100%;
 }
-imageswitch .img-container {
+imagecarousel .img-container {
 	display: none;
 	height: calc(100% - 20px);
 }
-imageswitch .ionic-scroll {
+imagecarousel .ionic-scroll {
 	height: 100%;
 }
-imageswitch .scroll {
+imagecarousel .scroll {
 	height: 100%;
 }
 /* end imageswitch */
