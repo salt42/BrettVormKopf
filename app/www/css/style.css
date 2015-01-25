@@ -173,6 +173,12 @@ ion-view.pane .wood-images {
     width: 30px;
 }
 
+@media (max-width: 950px) {
+    .button-overlay {
+        display: none;
+    }
+}
+
 /* end wood images button-overlay */
 
 /* start training page */
