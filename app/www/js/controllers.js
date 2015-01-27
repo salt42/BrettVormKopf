@@ -7,9 +7,9 @@ angular.module('BvK.controllers', [])
 	.controller('AppCtrl', function($scope, $ionicModal) {
 
 	})
-	.controller('HomeCtrl', function($scope) {
+	.controller('HomeCtrl', function($scope, $ionicSideMenuDelegate) {
 		//$scope.stats = statistics.getStats();
-		console.log('home controller')
+
 	})
 	.controller('QuestionCtrl', function($scope, coach) {
 		$scope.question = coach.nextQuestion();
