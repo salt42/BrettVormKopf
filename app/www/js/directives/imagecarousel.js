@@ -67,6 +67,7 @@ angular.module('BvK')
 					'</ion-slide-box>',
     	link: function postLink(scope, iElement, iAttrs, $ionicSlideBoxDelegate) {
 			scope.$watch("images", function(images) {
+                console.log(scope)
 				for( var i=0;i<images.length;i++) {
 					images[i].count = images[i].urls.length;
 					images[i].current = 1;
@@ -197,7 +198,9 @@ angular.module('BvK')
 				}
 
 				$scope.images[$scope.currentImageType].current = activeIndex + 1;
-				$scope.$apply(function () {});
+//				$scope.$apply(function () {
+//
+//                });
 				$('.image-type:nth-child(' + ($scope.currentImageType + 1) + ')' + ' .img-container:nth-child(' + (activeIndex + 1) + ')').show();
 
 			};

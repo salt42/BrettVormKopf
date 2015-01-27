@@ -15,17 +15,17 @@ angular.module('BvK.training', ['BvK.training.questionnaires'])
 						{
 							name: 'Längsschnitt',
 							short: 'Längs',
-							urls: ['http://www.rheinneckarblog.de/files/2013/09/bock_logo_k.jpg', 'http://www.rheinneckarblog.de/files/23/09/bock_logo_k.jpg']
+							urls: ['http://www.rheinneckarblog.de/files/2013/09/bock_logo_k.jpg', 'https://www.bmbf.de/_img/publications/Vorschaubild_Flyer_BAfoeG_n.jpg']
 						},
 						{
 							name: 'Querschnitt',
 							short: 'Quer',
-							urls: ['http://www.rheinneckarblog.de/files/2013/09/bock_logo_k.jpg', 'http://www.rheinneckarblog.de/files/20/09/bock_logo_k.jpg']
+							urls: ['http://www.rheinneckarblog.de/files/2013/09/bock_logo_k.jpg', 'https://www.bmbf.de/_img/publications/Vorschaubild_Flyer_BAfoeG_n.jpg']
 						},
 						{
 							name: 'Rinde',
 							short: 'Rinde',
-							urls: ['http://www.rheinneckarblog.de/files/2013/09/bock_logo_k.jpg', 'http://www.rheinneckarblog.de/files/23/09/bock_logo_k.jpg']
+							urls: ['http://www.rheinneckarblog.de/files/2013/09/bock_logo_k.jpg', 'https://www.bmbf.de/_img/publications/Vorschaubild_Flyer_BAfoeG_n.jpg']
 						}
 					],
 					properties: {
@@ -82,7 +82,7 @@ angular.module('BvK.training', ['BvK.training.questionnaires'])
 						}
 					}
 				],
-				severity: 1,
+				difficulty: 1,
 				questionnaire: 'allimages' // random, (severity), explizit name
 			}
 		}

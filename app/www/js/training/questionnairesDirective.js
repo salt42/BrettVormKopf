@@ -26,11 +26,11 @@ angular.module('BvK.training')
 					index = Math.floor(Math.random() * _questionnaires.length);
 					createTemplateFrom(index);
 					break;
-				case 'severity':
-					//select questionnaire random based on severity
+				case 'difficulty':
+					//select questionnaire random based on difficulty
 					break;
 				default:
-					//explizit
+					//explicit
 					index = _questionnairesHash.indexOf(question.questionnaire);
 					if(index > -1) {
 						createTemplateFrom(index);
