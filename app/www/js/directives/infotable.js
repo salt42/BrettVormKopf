@@ -1,10 +1,13 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, indent: 4 */
 /*global $, angular */
 angular.module('BvK')
-.directive('infotable', function factory($timeout) {
+.directive('infotable', function($timeout) {
 	var directiveDefinitionObject = {
 		restrict: 'E',
 		priority: -10,
+		link: function(scope, element) {
+		},
+		controller: function($scope) {},
 		scope: {
 			infos: '=',
 		},

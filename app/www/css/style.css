@@ -39,7 +39,7 @@ ion-item.item-complex:nth-child(even) > a{
 }
 /* end main page */
 
-/* imageswitch */
+/* imagecarousel */
 imagecarousel .button-overlay {
 	position: absolute;
 	z-index: 100;
@@ -73,31 +73,32 @@ imagecarousel .scroll {
 }
 /* end imageswitch */
 
-/* wood-data-table used multiple times */
-.wood-data-table {
+/* data-table*/
+infotable .info-table {
     margin: 0 auto 0 auto;
-	font-size: 16px;
+    font-size: 16px;
 }
-.wood-data-table tr:nth-child(even){
+infotable .info-table tr:nth-child(even){
     background-color: rgb(70, 70, 77);
 }
-.wood-data-table tr:nth-child(odd){
+infotable .info-table tr:nth-child(odd){
     background-color: rgb(84, 84, 93);
 }
-.wood-data-table td {
-	border-bottom: 1px solid #fff;
+infotable .info-table td {
+    border-bottom: 1px solid #fff;
     padding: 4px;
 }
-.wood-data-table td:nth-child(1) {
-	width: 110px;
+infotable .info-table td:nth-child(1) {
+    width: 110px;
     font-weight: bold;
     border-right: 1px double rgba(100, 100, 130, .5);
 }
 
-.wood-data-table td:nth-child(2) {
+infotable .info-table td:nth-child(2) {
     color: rgb(240, 243, 248);
 }
 
+/* end data-table*/
 
 /* wood page */
 

@@ -6,6 +6,8 @@ angular.module("BvK.training.questionnaires", [])
 angular.module('BvK.training', ['BvK.training.questionnaires'])
 	.config(function() {})
 	.factory('coach', function() {
+		//load topic's
+
 
 		function nextQuestion() {
 			return {
@@ -88,6 +90,10 @@ angular.module('BvK.training', ['BvK.training.questionnaires'])
 		}
 
 		return {
-			nextQuestion: nextQuestion
+			nextQuestion: nextQuestion,
+			guess: function(){},
+
+			setTopic: function(topicName){},
+			setDifficulty: function(){}
 		};
 	});

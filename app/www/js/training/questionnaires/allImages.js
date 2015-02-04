@@ -49,11 +49,11 @@ angular.module("BvK.training.questionnaires")
                     var $imgSwitch = $('.question-wood-images imagecarousel');
                     if ($imgSwitch.css('display') === 'none') {
                         $imgSwitch.show();
-                        $('.question-wood-images .wood-description').hide();
+                        $('.question-wood-images infotable').hide();
                         $('#infoButton').html('Info');
                     } else {
                         $imgSwitch.hide();
-                        $('.question-wood-images .wood-description').show();
+                        $('.question-wood-images infotable').show();
                         $('#infoButton').html('Bilder');
                     }
                 };
