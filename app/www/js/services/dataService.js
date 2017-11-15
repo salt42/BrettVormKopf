@@ -3,7 +3,8 @@ angular.module("BvK.services", [])
 		var _woodsData,
             _woods = null,
             _rawData = null,
-            serverUrl = 'http://bvk-saltme.rhcloud.com/data/',
+            // serverUrl = 'http://bvk-saltme.rhcloud.com/data/',
+            serverUrl = 'http://localhost/data/',
             woodsUrl = serverUrl + 'img/woods/';
     
     //localStorage.setItem("woodsData", null);
