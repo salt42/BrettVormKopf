@@ -13,8 +13,8 @@ angular.module('BvK')
 		},
 		template: 	'<table class="info-table">' +
                         '<tr ng-repeat="(key, value) in infos">' +
-                            '<td>{{key}}</td>' +
-                            '<td>{{value}}</td>' +
+                            '<td>{{value.name}}</td>' +
+                            '<td>{{value.value}}</td>' +
                         '</tr>' +
                     '</table>'
 	};

@@ -7,163 +7,92 @@ angular.module('BvK')
 		priority: -10,
 		scope: {
 			images: '=',
-			random: '='
+			random: '=',
+            control: '=',
 		},
-		template: 	'<div class="button-overlay">' +
+		template: 	'<div class="wrapper"><div class="button-overlay">' +
 						'<div class="button up ion-arrow-up-b" ng-click="moveTypeImages(-1)"></div>' +
 						'<div class="button down ion-arrow-down-b" ng-click="moveTypeImages(1)"></div>' +
 						'<div class="button left" ng-click="moveType(-1)">left</div>' +
 						'<div class="button right" ng-click="moveType(1)">right</div>' +
 					'</div>' +
-					'<ion-slide-box active-slide="activeSlide" on-slide-changed="slideHasChanged($index)" does-continue="true" show-pager="true">' +
-
-
-						'<ion-slide ng-repeat="image in images" class="image-type">' +
+					'<ion-slide-box delegate-handle="imageSlides" show-pager="false" drag-content="drag" active-slide="activeSlide" on-slide-changed="slideHasChanged($index)" does-continue="true" show-pager="true">' +
+						'<ion-slide ng-repeat="image in images" ng-init="typeId = $index" class="image-type">' +
 							'<span>{{image.name}}</span> ' +
 							'<span>{{image.current}} / {{image.count}}</span>' +
 							'<div class="across-images images">' +
 								'<div ng-repeat="imgURl in image.urls" class="img-container">' +
-									'<ion-scroll zooming="true" min-zoom="1" direction="xy" >' +
-										'<img ng-src="{{imgURl}}" />' +
+									'<ion-scroll on-scroll="updateScrollStatus(typeId,$index)" on-release="updateScrollStatus(typeId,$index)" zooming="true" min-zoom="1" direction="xy" delegate-handle="image-{{typeId}}-{{$index}}">' +
+										'<img ng-src="{{imgURl}}" class="blaaa">' +
 									'</ion-scroll>' +
 								'</div>' +
 							'</div>' +
 						'</ion-slide>' +
-
-
-						//'<ion-slide>' +
-						//	'<span>{{images[0].name}}</span> ' +
-						//	'<span>{{images[0].current}} / {{images[0].count}}</span>' +
-						//	'<div class="across-images images">' +
-						//		'<div ng-repeat="imgURl in images[0].urls" class="img-container">' +
-						//			'<ion-scroll zooming="true" min-zoom="1" direction="xy" >' +
-						//				'<img ng-src="{{imgURl}}" />' +
-						//			'</ion-scroll>' +
-						//		'</div>' +
-						//	'</div>' +
-						//'</ion-slide>' +
-						//'<ion-slide>' +
-						//	'<span>{{images[1].name}}</span> ' +
-						//	'<span>{{images[1].current}} / {{images[1].count}}</span>' +
-						//	'<div class="profile-images images">' +
-						//		'<div ng-repeat="imgURl in images[1].urls" class="img-container">' +
-						//			'<ion-scroll zooming="true" min-zoom="1" direction="xy" >' +
-						//				'<img ng-src="{{imgURl}}" />' +
-						//			'</ion-scroll>' +
-						//		'</div>' +
-						//	'</div>' +
-						//'</ion-slide>' +
-						//'<ion-slide>' +
-						//	'<span>{{images[2].name}}</span> ' +
-						//	'<span>{{images[2].current}} / {{images[2].count}}</span>' +
-						//	'<div class="bark-images images">' +
-						//		'<div ng-repeat="imgURl in images[2].urls" class="img-container">' +
-						//			'<ion-scroll zooming="true" min-zoom="1" direction="xy" >' +
-						//				'<img ng-src="{{imgURl}}" />' +
-						//			'</ion-scroll>' +
-						//		'</div>' +
-						//	'</div>' +
-						//'</ion-slide>' +
-					'</ion-slide-box>',
-    	link: function postLink(scope, iElement, iAttrs, $ionicSlideBoxDelegate) {
+					'</ion-slide-box></div>',
+    	link: function postLink(scope) {            
 			scope.$watch("images", function(images) {
-                console.log(scope)
-				for( var i=0;i<images.length;i++) {
-					images[i].count = images[i].urls.length;
-					images[i].current = 1;
-				}
+                if (!images)
+                    return;
+                
+                for( var i = 0; i < images.length; i++) {
+                    images[i].count = images[i].urls.length;
+                }
+                scope.typeId = 0;
+                $timeout(function(){
+                    var typeId = 0,
+                        activeType,
+                        imgId = 1;
 
-				$timeout(function(){
-					var typeId = 0,
-						activeType,
-						imgId = 1;
+                    if (scope.random === true) {
+                        typeId = Math.floor(Math.random() * images.length);
+                    }
+                    scope.typeId = typeId;
+                    scope.slideToType(typeId);
+                    activeType = $('.slider-slides .slider-slide')[typeId];
 
-					if (scope.random === true) {
-						typeId = Math.floor(Math.random() * 3);
-					}
-					scope.slideBoxDelegate.slide(typeId);
-					activeType = $('.slider-slides .slider-slide')[typeId];
-					if (scope.random === true) {
-						var imgCount = $('.img-container', activeType).length;
-						imgId = Math.floor(Math.random() * imgCount) + 1;
-					}
-					$('.img-container:nth-child(' + imgId + ')').show();
-					scope.images[0].current = imgId;
-					scope.images[1].current = imgId;
-					scope.images[2].current = imgId;
-				},100);
-
-
-				scope.updateNavigationButtons();
-			});
-		    //scope.$watch("woodId", function(newValue) {
-				////rebuild images
-				//if (typeof newValue !== 'number') { return; }
-				//woodGrabber.getWoodByID(newValue, function(wood) {
-		    //
-				//	scope.images = [
-				//		{
-				//			name: 'Längsschnitt',
-				//			urls: wood.URLacross,
-				//			count: wood.longi,
-				//			current: 1
-				//		},
-				//		{
-				//			name: 'Querschnitt',
-				//			urls: wood.URLprofile,
-				//			count: wood.profile,
-				//			current: 1
-				//		},
-				//		{
-				//			name: 'Rinde',
-				//			urls: wood.URLbark,
-				//			count: parseInt(wood.bark),
-				//			current: 1
-				//		}
-				//	];
-		    //
-				//	$timeout(function(){
-				//		var typeId = 0,
-				//			activeType,
-				//			imgId = 1;
-		    //
-				//		if (scope.random === true) {
-				//			typeId = Math.floor(Math.random() * 3);
-				//		}
-				//		scope.slideBoxDelegate.slide(typeId);
-				//		activeType = $('.slider-slides .slider-slide')[typeId];
-				//		if (scope.random === true) {
-				//			var imgCount = $('.img-container', activeType).length;
-				//			imgId = Math.floor(Math.random() * imgCount) + 1;
-				//		}
-				//		$('.img-container:nth-child(' + imgId + ')').show();
-				//		scope.images[0].current = imgId;
-				//		scope.images[1].current = imgId;
-				//		scope.images[2].current = imgId;
-				//	},100);
-				//});
-             //   scope.updateNavigationButtons();
-		    //});
-
+                    $('.img-container:nth-child(' + imgId + ')').show();
+                    for (var i = 0; i < scope.images.length; i++) {
+                        imgId = Math.floor(Math.random() * scope.images[0].count) + 1;
+                        scope.images[i].current = imgId;
+                    }
+                },100);
+                scope.updateNavigationButtons();
+            });  
 		},
-		controller: function($scope, $element, $ionicGesture, $ionicSlideBoxDelegate) {
-			$scope.currentImageType = 0;
-
+		controller: function($scope, $element, $ionicGesture, $ionicSlideBoxDelegate, $ionicScrollDelegate) {
 			$scope.imageTypesNames = [];
-			$scope.slideBoxDelegate = $ionicSlideBoxDelegate;
-
-
-		//	var answerID,
-		//
-		//		imageTypesClasses = ['.across-images', '.profile-images','.bark-images' ],
-         //       imageTypesNames = ['Längs', 'Quer', 'Rinde'],
-         //       imageTypesNamesEngl = ['longi', 'profile', 'bark'];
-		//
-		//	console.log($scope)
-
-
+			$scope.currentImageType = 0;
+            $scope.drag = false;
+            $scope.zoomed = false;
+            
+            $scope.resetZoom = function() {
+                if (!$scope.zoomed)
+                    return;
+                
+                $scope.zoomed = false;
+                $ionicScrollDelegate.zoomTo(1);
+                $ionicSlideBoxDelegate.enableSlide(false);
+            }
+            $scope.slideToType = function(typeId) {
+                $scope.resetZoom();
+                $ionicSlideBoxDelegate.slide(typeId);
+            }
+            $scope.updateScrollStatus = function(type, img) {
+                var handleName = 'image-' + type + "-" + img,
+                    scrollPos = $ionicScrollDelegate.$getByHandle(handleName).getScrollPosition();
+                if (typeof scrollPos !== "object" || !("zoom" in scrollPos)) 
+                    return;
+                
+                if (scrollPos.zoom == 1) {
+                    $ionicSlideBoxDelegate.enableSlide(true);
+                    $scope.zoomed = false;
+                } else {
+                    $ionicSlideBoxDelegate.enableSlide(false);
+                    $scope.zoomed = true;
+                }
+            };
 			$scope.moveType = function(direction) {
-				console.log('move type')
+                $scope.resetZoom();
 				if (direction < 0) {
 					$ionicSlideBoxDelegate.previous();
 				} else {
@@ -171,11 +100,9 @@ angular.module('BvK')
 				}
 			};
 			$scope.moveTypeImages = function(direction) {
-				console.log('move type images')
+                $scope.resetZoom();
 				var activeIndex = 0,
-					//imgContainer = $($scope.imageTypesClasses[currentImageType] + ' .img-container'),
 					imgContainer = $('.image-type:nth-child(' + ($scope.currentImageType + 1) + ')' + ' .img-container'),
-					//imgContainer = $('.img-container'),
 					i = 0;
 
 				for (;i<imgContainer.length;i++) {
@@ -198,21 +125,23 @@ angular.module('BvK')
 				}
 
 				$scope.images[$scope.currentImageType].current = activeIndex + 1;
-//				$scope.$apply(function () {
-//
-//                });
 				$('.image-type:nth-child(' + ($scope.currentImageType + 1) + ')' + ' .img-container:nth-child(' + (activeIndex + 1) + ')').show();
-
 			};
 
-			$ionicGesture.on('swipedown', function () {
+			var swipedown = $ionicGesture.on('swipedown', function (e) {
 				//show next image type
+                if ($scope.zoomed || e.gesture.velocityY < 1)
+                    return;
 				$scope.moveTypeImages(1);
+                $scope.$apply();
 			}, $element);
 
-			$ionicGesture.on('swipeup', function () {
+			var swipeup = $ionicGesture.on('swipeup', function (e) {
 				//show next image type
+                if ($scope.zoomed || e.gesture.velocityY > 1)
+                    return;
 				$scope.moveTypeImages(-1);
+                $scope.$apply();
 			}, $element);
 
 			$scope.slideHasChanged = function(index) {
@@ -220,8 +149,14 @@ angular.module('BvK')
                 $scope.updateNavigationButtons();
 			};
             $scope.updateNavigationButtons = function(){
+                //update imageTypesNames array
+                for (var i = 0; i < $scope.images.length; i++) {
+                    $scope.imageTypesNames[i] = $scope.images[i].short;
+                }
+                
                 var next = 0,
                     prev = $scope.imageTypesNames.length - 1;
+                
                 if($scope.currentImageType + 1 < $scope.imageTypesNames.length){
                     next = $scope.currentImageType + 1;
                 }
@@ -231,6 +166,24 @@ angular.module('BvK')
                 $('.button-overlay .button.right').html($scope.imageTypesNames[next]);
                 $('.button-overlay .button.left').html($scope.imageTypesNames[prev]);
             };
+            
+            $scope.$on("$destroy",function() {
+                $ionicGesture.off(swipedown, "swipedown");
+                $ionicGesture.off(swipeup, "swipeup");
+                $scope.imageTypesNames = null;
+                $scope.currentImageType = null;
+                $scope.drag = null;
+                $scope.slideBoxDelegate = null;
+                $scope.zoomed = null;
+                $scope.images = null;
+                $scope.moveType = null;
+                $scope.moveTypeImages = null;
+                angular.forEach(angular.element(".blaaa"), function(value){
+                    var s = angular.element(value).scope()
+                    s.$parent.$parent.image = null;
+                    s.$destroy();
+                });
+            });
 		}
 	};
 	return directiveDefinitionObject;

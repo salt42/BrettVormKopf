@@ -2,9 +2,8 @@
 body, html {
 	height: 100%;
 }
-ion-side-menu {
-	background-color: #222;
-}
+
+
 
 /* main page */
 ion-item.item-complex {
@@ -31,28 +30,41 @@ ion-item.item-complex span {
     border-left: 1px double rgba(100, 100, 130, .5) !important;
     padding-left: 10px;
 }
-ion-item.item-complex:nth-child(odd) > a{
-    background-color: rgb(70, 70, 77) !important;
-}
-ion-item.item-complex:nth-child(even) > a{
-    background-color: rgb(84, 84, 93) !important;
-}
 /* end main page */
 
 /* imagecarousel */
+imagecarousel {
+/*    position: relative;*/
+    height: 100%;
+}
 imagecarousel .button-overlay {
-	position: absolute;
+    position: absolute;
+    bottom:45px;
+    right:0px;
+    height:150px;
+    width:250px;
+    pointer-events: none;
 	z-index: 100;
+}
+.question-images imagecarousel .button-overlay {
+    bottom:130px;
+    height:100px;
+    width:240px;
+    overflow: visible
 }
 imagecarousel .slider{
 	height: 100%;
-	overflow: scroll;
+	overflow: hidden;
 }
 imagecarousel ion-slide {
+    height: 100%;
 	width: 100%;
 	text-align: center;
 }
-imagecarousel img{
+imagecarousel .image-type {
+    height: 100%;
+}
+imagecarousel img {
 	margin: 0 2.5% 0 2.5%;
 	max-height: 95%;
 	max-width: 95%;
@@ -67,44 +79,18 @@ imagecarousel .img-container {
 }
 imagecarousel .ionic-scroll {
 	height: 100%;
+    overflow: visible;
 }
 imagecarousel .scroll {
 	height: 100%;
 }
+imagecarousel .scroll-bar {
+	display: none;
+}
 /* end imageswitch */
 
-/* data-table*/
-infotable .info-table {
-    margin: 0 auto 0 auto;
-    font-size: 16px;
-}
-infotable .info-table tr:nth-child(even){
-    background-color: rgb(70, 70, 77);
-}
-infotable .info-table tr:nth-child(odd){
-    background-color: rgb(84, 84, 93);
-}
-infotable .info-table td {
-    border-bottom: 1px solid #fff;
-    padding: 4px;
-}
-infotable .info-table td:nth-child(1) {
-    width: 110px;
-    font-weight: bold;
-    border-right: 1px double rgba(100, 100, 130, .5);
-}
-
-infotable .info-table td:nth-child(2) {
-    color: rgb(240, 243, 248);
-}
-
-/* end data-table*/
 
 /* wood page */
-
-ion-view.pane {
-    background-color: rgb(70, 70, 77) !important;
-}
 ion-view.pane .wood-name {
     margin: 7px;
     font-weight: bold;
@@ -115,7 +101,7 @@ ion-view.pane .wood-name {
     margin: 5px 3px;
     padding: 0px 4px;
     font-weight: bold;
-    color: #e0e0e0;
+    color: #000;
     background-color: rgb(84, 84, 93) !important;
     border: 2px solid rgb(185, 185, 198) !important;
 }
@@ -129,11 +115,6 @@ ion-view.pane .wood-images {
 /* start wood images button-overlay */
 
 .button-overlay {
-    position: absolute;
-    pointer-events: none;
-    width: 100%;
-    top: 0px;
-    bottom: 140px;
 }
 .button-overlay .button {
     position: absolute;
@@ -190,6 +171,11 @@ ion-view.pane .wood-images {
 /* end training page */
 
 /* question page */
+.answer-box {
+    width: 100%;
+    position: absolute;
+    bottom: 10px;
+}
 .question-wood-images {
 	height: calc(100% - 115px);
 }
@@ -211,12 +197,7 @@ ion-view.pane .wood-images {
 	padding: 0 10px 0 0;
 	float: right;
 }
-@media screen and (max-height: 1900px) {
-	/* smaller than 300px */
-	.multiple-choice-answer {
-/*		display: none;*/
-	}
-}
+
 #infoButton {
 	display: none;
 	white-space: nowrap;

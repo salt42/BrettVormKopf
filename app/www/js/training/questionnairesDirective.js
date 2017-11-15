@@ -5,11 +5,13 @@ angular.module('BvK.training')
 			_questionnairesHash = [],
 			_template = '';
 
-
 		//laod questionnaires
 		var invokeQueue = angular.module("BvK.training.questionnaires")._invokeQueue;
 		for (var i=0;i<invokeQueue.length;i++) {
-			_questionnaires.push(invokeQueue[i][2][1].call());
+			_questionnaires.push(invokeQueue[i][2][1].call({
+				uselessButGood2know: function() {
+				},
+			}));
 			_questionnairesHash.push(invokeQueue[i][2][0]);
 		}
 
@@ -42,19 +44,31 @@ angular.module('BvK.training')
 		}
 
 		var linker = function(scope, element, attrs) {
+            createTemplateFrom(0);
+            var childScope = scope.$new(false, scope);
+            var compiledDirective = $compile(_template);
+            var directiveElement = compiledDirective(childScope);
+            element.append(directiveElement);
 			scope.$watch("question", function(newQuestion) {
-				//rebuild questionnaire
-				configure(newQuestion);
-				element.html(_template).show();
-				$compile(element.contents())(scope);
+				//configure(newQuestion);
+				//element.html(_template).show();
+				//$compile(element.contents())(scope);
 			});
+            scope.$on("$destroy",function() {
+                //$( window ).off( "resize.Viewport" );
+				//element.unbind();
+                childScope.$destroy();
+                element.empty();
+                childScope = null;
+            });    
 		}
 
 		return {
 			restrict: "E",
 			link: linker,
 			scope: {
-				question:'='
+				question: "=",
+				callback: "&"
 			}
 		};
 	});

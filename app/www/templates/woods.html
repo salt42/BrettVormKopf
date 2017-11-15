@@ -1,18 +1,31 @@
-<ion-view title="Woods">
-  <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+<ion-view view-title="Woods" >
+  <ion-nav-buttons side="primary">
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+    </button>
   </ion-nav-buttons>
-  <ion-content class="has-header">
-	<ion-refresher
-		on-refresh="doRefresh()"
-		pulling-text="Pull to refresh..."
-		refreshing-text="Refreshing!"
-		refreshing-icon="ion-loading-c">
-	</ion-refresher>
+  <ion-content>
     <ion-list>
       <ion-item ng-repeat="wood in woods" href="#/app/woods/{{wood.id}}">
-		<img ng-src="{{wood.preview}}" width="40px" style="float:left;"/>
-        <span class="name-de">{{wood.name_de}}</span><span class="statistics-quot"><!--{{wood.statistics_quot}}-->1 / 3</span><br>
+        <div class="listPreviews" style="width:50px; height:50px; overflow:hidden;float:left;">
+		  <img ng-src="{{wood.preview}}" style="min-height: 50px; min-width:90px;" />
+        </div>
+        <span class="statistics-quot">
+            <div style="position:absolute; top:50%; left:50%; transform: translate(-43%, -60%); font-size:12px;">
+<!--                {{ Math.round((wood.stats.learned || 0) * 100) }}%-->
+                {{ wood.stats.learnedPercent}}%
+            </div>
+          <progress-arc
+            size="50"
+            stroke="orange"
+            background="white"
+            complete="(wood.stats.learned || 0)"
+            stroke-width="3"
+            progress="0.75"
+            counter-clockwise="false">
+            </progress-arc>
+            
+        </span>
+        <span class="name-de">{{wood.name_de}}</span><br>
         <span class="name-bo">{{wood.name_bo}}</span>
       </ion-item>
     </ion-list>

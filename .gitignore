@@ -1,2 +1,10 @@
 /data
 /.idea
+/app/node_modules/
+/app/hooks/
+/app/.sass-cache/
+/app/__backupOld/
+/app/platforms/
+/app/plugins/
+/node_modules/
+/app/www/lib/
