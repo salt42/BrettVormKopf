@@ -1,5 +1,6 @@
 /data
 /.idea
+/finishing/
 /app/node_modules/
 /app/hooks/
 /app/.sass-cache/
