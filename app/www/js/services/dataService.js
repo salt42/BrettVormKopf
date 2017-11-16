@@ -3,8 +3,8 @@ angular.module("BvK.services", [])
 		var _woodsData,
             _woods = null,
             _rawData = null,
-            // serverUrl = 'http://bvk-saltme.rhcloud.com/data/',
-            serverUrl = 'http://localhost/data/',
+            // serverUrl = 'http://9tbass.de/bvk/data/',
+            serverUrl = 'http://localhost:8080/data/',
             woodsUrl = serverUrl + 'img/woods/';
     
     //localStorage.setItem("woodsData", null);
@@ -70,6 +70,8 @@ angular.module("BvK.services", [])
 				imageName,
                 count = 0,
                 max = 0;
+
+            var called = false;
                         
             function setCachedUrl(onlineUrl, targetArray) {
                 if (_woodsData.offline) {
@@ -79,14 +81,18 @@ angular.module("BvK.services", [])
                             targetArray.push(localUrl);
                         } else {
                         }
-                        if(count >= max) {
-                            //call back
-                            callBack(data);
-                        }
+                        checkReady();
                     });
                 } else {
                     targetArray.push(onlineUrl);
                     count++;
+                }
+            }
+            function checkReady() {
+                console.log(count, max);
+                if (!called && count >= 39) {
+                    callBack(data);
+                    called = true;
                 }
             }
             function cachedPrev(woodId) {
@@ -94,15 +100,16 @@ angular.module("BvK.services", [])
                     ImgCache.getCachedFileURL(data[woodId].preview, function(url, localUrl) {
                         count++;
                         data[woodId].preview = localUrl;
+                        checkReady();
                     });
                 } else {
                     count++;
                 }
             }
-            for(;x<data.length;x++) {
+            for(x = 0; x < data.length; x++) {
                 max += data[x].longi + data[x].profile + data[x].bark + 1;
             }
-			for(x = 0;x<data.length;x++) {
+			for(x = 0; x < data.length; x++) {
 				//iterate over woods and create image urls
 				wood = data[x];
 				wood.URLacross = [];
@@ -154,11 +161,8 @@ angular.module("BvK.services", [])
 				for (i=0;i<wood.bark;i++) {
 					imageName = woodsUrl + wood.id + '/bark/' + i + '.jpg';
                     setCachedUrl(imageName, wood.URLbark);
-				}
+                }
 			}
-            if(count >= max) {
-                callBack(data);
-            }
 		}
 		function hasData(callBack) {
             if (_woodsData.data.raw != "") {
@@ -253,13 +257,13 @@ angular.module("BvK.services", [])
                     }
                     tick();
                 }
-                progress(progValue, "Wait on server response.");
+                progress(progValue, "Waiting for response from server...");
                 grabFromServer()
                 .success(function(data,name,e) {
                     progValue += 0.04;
-                    progress(progValue, "Connected to server.");
+                    progress(progValue, "Talking to server...");
                     //compareData -> update
-                    console.log("compare offline to online data")
+                    console.log("comparing offline data to online data: ", data);
                     if (e.responseText, _woodsData.data.raw) {
                         //gleich -> use offline (tun nichts)
                         pseudoLoad(
@@ -268,13 +272,12 @@ angular.module("BvK.services", [])
                             },
                             function(prog) {
                                 progValue += prog;
-                                progress(prog, "Prepare data.");
+                                progress(prog, "Preparing woody data...");
                             }
                         );
                     } else {
-                        console.log("diffrent")
                         progValue += 0.04;
-                        progress(progValue, "Download data to cache.");
+                        progress(progValue, "Fetching data from server (only the first time).");
                         //cache data
                         cacheImages(data,
                             function succ() {
@@ -285,7 +288,11 @@ angular.module("BvK.services", [])
                                 });
                             },
                             function prog(value, url) {
-                                progress(value*0.9 + progValue, "cache image." + url);
+                                progress(value*0.9 + progValue, (url ? "caching image: " + url : url));
+                            },
+                            function error(err) {
+                                console.log(err);
+                                error(err);
                             }
                         );
                     }
