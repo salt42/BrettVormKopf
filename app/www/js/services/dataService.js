@@ -89,7 +89,6 @@ angular.module("BvK.services", [])
                 }
             }
             function checkReady() {
-                console.log(count, max);
                 if (!called && count >= 39) {
                     callBack(data);
                     called = true;
@@ -263,7 +262,6 @@ angular.module("BvK.services", [])
                     progValue += 0.04;
                     progress(progValue, "Talking to server...");
                     //compareData -> update
-                    console.log("comparing offline data to online data: ", data);
                     if (e.responseText, _woodsData.data.raw) {
                         //gleich -> use offline (tun nichts)
                         pseudoLoad(
