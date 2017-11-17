@@ -5,28 +5,28 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-//var serverUrl = 'http://localhost:3000/data/',
-var serverUrl = 'http://bvk-saltme.rhcloud.com/data/',
+var serverUrl = 'http://bvk.salt.bplaced.net/data/',
+    // serverUrl = 'http://localhost:8080/data/',
     woodsUrl = serverUrl + 'img/woods/',
     imageCacheReadyEvent = new Event('imageCacheReady');
 
-    function initImageChache() {
-        ImgCache.options.debug = false;
-        ImgCache.options.usePersistentCache = true;
-        ImgCache.init(function() {
-            setTimeout(function() {
-                document.dispatchEvent(imageCacheReadyEvent);
-            }, 30);
-        });
-    }
-    if (typeof(cordova) !== 'undefined') {
-        // cordova test
-        console.log('cordova start');
-        document.addEventListener('deviceready', initImageChache, false);
-    } else {
-        // normal browser test
-        initImageChache();
-    }
+function initImageChache() {
+    ImgCache.options.debug = false;
+    ImgCache.options.usePersistentCache = true;
+    ImgCache.init(function() {
+        setTimeout(function() {
+            document.dispatchEvent(imageCacheReadyEvent);
+        }, 30);
+    });
+}
+if (typeof(cordova) !== 'undefined') {
+    // cordova test
+    document.addEventListener('deviceready', initImageChache, false);
+} else {
+    // normal browser test
+    initImageChache();
+}
+
 angular.module('BvK', ['ionic', 'angular-progress-arc', 'jett.ionic.filter.bar', "BvK.controllers", "BvK.services", 'BvK.training'])
 .config( function( $compileProvider, $ionicConfigProvider ) {   
 //    $ionicConfigProvider.views.maxCache(0);

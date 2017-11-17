@@ -7,5 +7,6 @@
 /app/__backupOld/
 /app/platforms/
 /app/plugins/
+/app/resources/
 /node_modules/
 /app/www/lib/

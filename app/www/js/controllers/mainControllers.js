@@ -42,12 +42,13 @@ angular.module('BvK.controllers', [])
                 $state.go($state.get('app.woods'), {});
             },
             function progress(percent, job) {
-                $scope.lastJob = job;
+                $scope.lastJob = job || $scope.lastJob;
                 $scope.progress = (1 - percent);
-                $scope.progressPercent = Math.round(percent * 100);
+                $scope.progressPercent = Math.min(100, Math.floor(percent * 100));
                 $safeApply($scope);
             },
             function error(msg) {
+                console.log('error', msg);
                 $scope.error(msg);
             }
         );
@@ -63,8 +64,8 @@ angular.module('BvK.controllers', [])
 //    };
     $scope.error = function() {
         var alertPopup = $ionicPopup.alert({
-            title: 'Not connected!',
-            template: 'for the first time i need internet to download data!'
+            title: 'No Internet!',
+            template: 'Please make sure your have an internet connection established.'
         });
         alertPopup.then(function(res) {
             //exit app
