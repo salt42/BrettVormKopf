@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var serverUrl = 'http://localhost:8080/data/',
-// var serverUrl = 'http://9tbass.de/bvk/data/',
+var serverUrl = 'http://bvk.salt.bplaced.net/data/',
+    // serverUrl = 'http://localhost:8080/data/',
     woodsUrl = serverUrl + 'img/woods/',
     imageCacheReadyEvent = new Event('imageCacheReady');
 
