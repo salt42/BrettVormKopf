@@ -35,24 +35,23 @@ angular.module('BvK', ['ionic', 'angular-progress-arc', 'jett.ionic.filter.bar',
     // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
 })
 .run(function($ionicPlatform, $ionicPopup) {
-  $ionicPlatform.ready(function() {
-      
-    if(navigator.connection.type == Connection.NONE) {
-        $ionicPopup.confirm({
-            title: "Internet Disconnected",
-            content: "The internet is disconnected on your device. Please Connect and restart the App"
-        })
-        .then(function(result) {
-            if(!result) {
-                ionic.Platform.exitApp();
-            }
-        });
-    }
-    if(window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
+    $ionicPlatform.ready(function() {
+        if (window.Connection && navigator.connection.type === Connection.NONE) {
+            $ionicPopup.confirm({
+                title: "Internet Disconnected",
+                content: "The internet is disconnected on your device. Please Connect and restart the App"
+            })
+                .then(function (result) {
+                    if (!result) {
+                        ionic.Platform.exitApp();
+                    }
+                });
+        }
+        if(window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            StatusBar.styleDefault();
+        }
+    });
 })
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider

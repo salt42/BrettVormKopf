@@ -3,8 +3,9 @@ angular.module("BvK.services", [])
 		var _woodsData,
             _woods = null,
             _rawData = null,
-            // serverUrl = 'http://bvk-saltme.rhcloud.com/data/',
-            serverUrl = 'http://localhost/data/',
+            serverUrl = 'http://9tbass.de/bvk/data/',
+            // serverUrl = 'http://bvk.salt.bplaced.net/data/',
+            // serverUrl = 'http://localhost/data/',
             woodsUrl = serverUrl + 'img/woods/';
     
     //localStorage.setItem("woodsData", null);
