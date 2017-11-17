@@ -222,3 +222,8 @@ ion-view.pane .wood-images {
 	bottom: 10px;
 	transform: translate(-50%);
 }
+
+.popup,
+.popup h3 {
+    color: #4e4e4e;
+}
