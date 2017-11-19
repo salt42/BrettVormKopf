@@ -1,6 +1,6 @@
 {
   "name": "BrettVormKopf",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lehrnsoftware für forstwirtschaftliche Holzarten",
   "dependencies": {
     "gulp": "^3.5.6",
@@ -21,12 +21,11 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
-    "cordova-plugin-network-information"
+    "cordova-plugin-network-information",
+    "cordova-plugin-compat",
+    "cordova-plugin-file"
   ],
   "cordovaPlatforms": [
-    {
-      "platform": "android",
-      "locator": "wp8"
-    }
+    "android"
   ]
 }

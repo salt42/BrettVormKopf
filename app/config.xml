@@ -1,16 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="1" id="de.salt.brettvormkopf" version="1.0.0">
+<widget android-versionCode="1" id="de.salt.brettvormkopf" version="1.0.1">
     <name>BrettVormKopf</name>
     <description>
       Beim Holzarten bestimmen ein "Brett vor'm Kopf"? Die App ermöglicht ein Vertiefen der Kenntnisse über makroskopische Unterscheidungsmerkmale von 30 in Deutschland heimischer Laubhölzer und der 9 wichtigsten Laubhölzer, die besonders im Forst (Studium) relevant sind.
-  </description>
+    </description>
     <author email="boluuuu@gmail.com" href="">
       Salt'n Pepper Ware
-  </author>
+    </author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="*" />
     <allow-intent href="*://bvk.salt.bplaced.net/*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
