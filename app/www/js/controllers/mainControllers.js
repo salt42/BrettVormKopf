@@ -36,7 +36,6 @@ angular.module('BvK.controllers', [])
 //    }
 //    tick();
     document.addEventListener('imageCacheReady', function(e) {
-//        return;
         woodGrabber.init(
             function success(data) {
                 $state.go($state.get('app.woods'), {});
@@ -48,20 +47,10 @@ angular.module('BvK.controllers', [])
                 $safeApply($scope);
             },
             function error(msg) {
-                console.log('error', msg);
                 $scope.error(msg);
             }
         );
     }, false);
-//    $scope.downlaod = function() {
-//        woodGrabber.prepareOffline(function succsess() {
-//            $state.go($state.get('app.woods'), {});
-//        }, function progress(percent) {
-//            $scope.progress = percent;
-//            $scope.progressPercent = Math.round($scope.progress * 100);
-//            $scope.$apply();
-//        });
-//    };
     $scope.error = function() {
         var alertPopup = $ionicPopup.alert({
             title: 'No Internet!',

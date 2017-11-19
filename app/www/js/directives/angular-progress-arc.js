@@ -47,7 +47,7 @@
                 return function (scope, element, attr) {
                     // Firefox has a bug where it doesn't handle rotations and stroke dashes correctly.
                     // https://bugzilla.mozilla.org/show_bug.cgi?id=949661
-                    scope.offset = /firefox/i.test(navigator.userAgent) ? -89.9 : -90;
+                    scope.offset = /firefox/i.test(navigator.userAgent) ? -89.9 : -270;
                     var updateRadius = function () {
                         scope.strokeWidthCapped = Math.min(scope.strokeWidth, scope.size / 2 - 1);
                         scope.radius = Math.max((scope.size - scope.strokeWidthCapped) / 2 - 1, 0);

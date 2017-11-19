@@ -3,7 +3,8 @@ angular.module("BvK.services", [])
 		var _woodsData,
             _woods = null,
             _rawData = null,
-            serverUrl = 'http://bvk.salt.bplaced.net/data/',
+            // serverUrl = 'http://bvk.salt.bplaced.net/data/',
+            serverUrl = 'http://9tbass.de/bvk/data/',
             // serverUrl = 'http://localhost:8080/data/',
             woodsUrl = serverUrl + 'img/woods/';
     
@@ -89,7 +90,8 @@ angular.module("BvK.services", [])
                 }
             }
             function checkReady() {
-                if (!called && count >= 39) {
+                console.log(count, max);
+                if (count >= max) {
                     callBack(data);
                     called = true;
                 }
@@ -99,7 +101,6 @@ angular.module("BvK.services", [])
                     ImgCache.getCachedFileURL(data[woodId].preview, function(url, localUrl) {
                         count++;
                         data[woodId].preview = localUrl;
-                        checkReady();
                     });
                 } else {
                     count++;
@@ -211,7 +212,8 @@ angular.module("BvK.services", [])
                 urls.push(woodsUrl + wood.id + '/thumbs/bark.jpg');
             }
             function cacheFile(url) {
-                ImgCache.cacheFile(url, function() {
+                console.log('cahcing file %s', url);
+                ImgCache.cacheFile(url, function prog() {
                     progressValue++
                     progress(progressValue / urls.length, url);
                     if ( progressValue / urls.length >= 1) {
@@ -262,7 +264,7 @@ angular.module("BvK.services", [])
                     progValue += 0.04;
                     progress(progValue, "Talking to server...");
                     //compareData -> update
-                    if (e.responseText, _woodsData.data.raw) {
+                    if (_woodsData.data.raw) {
                         //gleich -> use offline (tun nichts)
                         pseudoLoad(
                             function() {
@@ -286,7 +288,7 @@ angular.module("BvK.services", [])
                                 });
                             },
                             function prog(value, url) {
-                                progress(value*0.9 + progValue, (url ? "caching image: " + url : url));
+                                progress(value*0.9 + progValue, url);
                             },
                             function error(err) {
                                 console.log(err);

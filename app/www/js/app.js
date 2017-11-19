@@ -5,14 +5,12 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var serverUrl = 'http://bvk.salt.bplaced.net/data/',
-    // serverUrl = 'http://localhost:8080/data/',
-    woodsUrl = serverUrl + 'img/woods/',
-    imageCacheReadyEvent = new Event('imageCacheReady');
+var imageCacheReadyEvent = new Event('imageCacheReady');
 
 function initImageChache() {
     ImgCache.options.debug = false;
     ImgCache.options.usePersistentCache = true;
+    ImgCache.options.chromeQuota = 120*1024*1024;
     ImgCache.init(function() {
         setTimeout(function() {
             document.dispatchEvent(imageCacheReadyEvent);

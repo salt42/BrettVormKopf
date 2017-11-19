@@ -23,7 +23,9 @@
     "ionic-plugin-keyboard",
     "cordova-plugin-network-information",
     "cordova-plugin-compat",
-    "cordova-plugin-file"
+    "cordova-plugin-crosswalk-webview",
+    "cordova-plugin-file",
+    "cordova-plugin-file-transfer"
   ],
   "cordovaPlatforms": [
     "android"
