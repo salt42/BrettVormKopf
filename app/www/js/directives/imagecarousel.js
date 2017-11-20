@@ -18,8 +18,8 @@ angular.module('BvK')
 					'</div>' +
 					'<ion-slide-box delegate-handle="imageSlides" show-pager="false" drag-content="drag" active-slide="activeSlide" on-slide-changed="slideHasChanged($index)" does-continue="true" show-pager="true">' +
 						'<ion-slide ng-repeat="image in images" ng-init="typeId = $index" class="image-type">' +
-							'<span>{{image.name}}</span> ' +
-							'<span>{{image.current}} / {{image.count}}</span>' +
+							'<div class="img-desc"><span>{{image.name}}</span> ' +
+							'<span class="img-counter">{{image.current}} / {{image.count}}</span></div>' +
 							'<div class="across-images images">' +
 								'<div ng-repeat="imgURl in image.urls" class="img-container">' +
 									'<ion-scroll on-scroll="updateScrollStatus(typeId,$index)" on-release="updateScrollStatus(typeId,$index)" zooming="true" min-zoom="1" direction="xy" delegate-handle="image-{{typeId}}-{{$index}}">' +
