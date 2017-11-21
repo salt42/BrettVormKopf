@@ -101,6 +101,7 @@ ion-item.item-complex > a.activated {
 
 infotable {
     height: 100%;
+    padding-top: 16px;
 }
 infotable .info-table {
     width: 100%;
@@ -123,18 +124,11 @@ infotable .info-table td {
     padding: 7px 16px;
 }
 
-.tabs-icon-top > .tabs .tab-item {
+.tabs .tab-item {
     color: var(--font-color);
     font-size: 15px;
     padding: 10px 0;
 }
-.tabs-top > .tabs, .tabs.tabs-top {
-    top: auto;
-    bottom: 0px;
-    left: 0;
-    width: 100%;
-}
-
 
 .tabs-icon-top > .tabs .tab-item.tab-item-active,
 .tabs-icon-top > .tabs .tab-item.activated {
@@ -224,6 +218,11 @@ ion-view.pane .wood-images {
 	height: calc(100% - 115px);
 }
 /* end wood page */
+
+/* menu */
+.menu-item {
+    color: var(--font-color);
+}
 
 /* start wood images button-overlay */
 
