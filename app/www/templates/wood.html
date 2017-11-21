@@ -6,21 +6,14 @@
       </button>
     </ion-nav-buttons>
     <ion-content class="has-header" scroll="false">
-        <h1 class="wood-name">{{Wood.name_de}}</h1>
-        <button id="openImages" class="button button-balanced" ng-click="switch()">Bilder</button>
-        <hr style="clear:both;">
-        
         <ion-tabs class="tabs-icon-top tabs-positive">
             <ion-tab title="Info" icon-on="ion-clipboard" icon-off="ion-clipboard">
                 <ion-content>
-<!--                    <ion-nav-view name="tab-info">-->
-                        <infotable class="wood-properties" infos="Wood.properties" style="display:block;"></infotable>
-<!--                    </ion-nav-view>-->
+                    <infotable class="wood-properties" infos="Wood.properties" style="display:block;"></infotable>
                 </ion-content>
             </ion-tab>
             <ion-tab title="Bilder" icon-on="ion-images" icon-off="ion-images">
                 <ion-content>
-<!--                    <ion-nav-view name="tab-bilder"></ion-nav-view>-->
                     <div class="wood-images">
                         <imagecarousel style="height: 800px;" images="Wood.images" random="true"></imagecarousel>
                     </div>

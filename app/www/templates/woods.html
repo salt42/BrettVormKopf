@@ -5,15 +5,18 @@
   </ion-nav-buttons>
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="wood in woods" href="#/app/woods/{{wood.id}}">
-        <div class="listPreviews" style="width:50px; height:50px; overflow:hidden;float:left;">
-		  <img ng-src="{{wood.preview}}" style="min-height: 50px; min-width:90px;" />
+      <ion-item ng-repeat="wood in woods" href="#/app/woods/{{wood.id}}" class="wood-tile">
+        <div class="wood-thumbnail-wrapper">
+		      <img ng-src="{{wood.preview}}" class="wood-thumbnail" />
         </div>
-        <span class="statistics-quot">
-            <div style="position:absolute; top:50%; left:50%; transform: translate(-43%, -60%); font-size:12px;">
-<!--                {{ Math.round((wood.stats.learned || 0) * 100) }}%-->
-                {{ wood.stats.learnedPercent}}%
-            </div>
+        <div class="wood-name-wrapper">
+          <span class="name-de">{{wood.name_de}}</span><br>
+          <span class="name-bo">{{wood.name_bo}}</span>
+        </div>
+        <div class="wood-statistics-wrapper">
+          <div class="wood-statistics-label">
+              {{ wood.stats.learnedPercent}}%
+          </div>
           <progress-arc
             size="50"
             stroke="orange"
@@ -22,11 +25,8 @@
             stroke-width="3"
             progress="0.75"
             counter-clockwise="false">
-            </progress-arc>
-            
-        </span>
-        <span class="name-de">{{wood.name_de}}</span><br>
-        <span class="name-bo">{{wood.name_bo}}</span>
+          </progress-arc>
+        </div>
       </ion-item>
     </ion-list>
   </ion-content>

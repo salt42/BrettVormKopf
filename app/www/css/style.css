@@ -14,9 +14,9 @@ body, html {
 /* main page */
 ion-item.item-complex {
     color: #e0e0e0;
+    padding: 8px 0;
 }
 ion-item.item-complex .name-de {
-    padding-top: 14px;
     font-weight: bold;
 }
 ion-item.item-complex .name-bo {
@@ -35,6 +35,40 @@ ion-item.item-complex img {
 }
 ion-item.item-complex span {
     padding-left: 10px;
+}
+.wood-tile .item-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    padding: 0 16px;
+}
+.wood-thumbnail-wrapper,
+.wood-statistics-wrapper {
+    flex: 0 0 50px;
+    overflow: hidden;
+}
+.wood-statistics-wrapper {
+    position: relative;
+}
+.wood-statistics-wrapper svg {
+    margin-top: 4px;
+}
+.wood-statistics-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.wood-name-wrapper {
+    flex: 5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 7px;
+}
+.wood-thumbnail {
+    min-height: 50px;
+    min-width: 50px;
 }
 /* end main page */
 
@@ -63,12 +97,11 @@ ion-item.item-complex > a.activated {
 }
 
 .scroll-content.ionic-scroll {
-    padding: 16px;
-}
-ion-item.item-complex .item-content {
-    margin-bottom: 16px;
 }
 
+infotable {
+    height: 100%;
+}
 infotable .info-table {
     width: 100%;
     background-color: var(--tr-col-2);
