@@ -90,7 +90,6 @@ angular.module("BvK.services", [])
                 }
             }
             function checkReady() {
-                console.log(count, max);
                 if (count >= max) {
                     callBack(data);
                     called = true;
@@ -191,37 +190,43 @@ angular.module("BvK.services", [])
         }
     
         function cacheImages(rawData, success, progress, error) {
-            var urls = [],
+            var woods = [],
                 progressValue = 0,
                 wood,
                 i = 0,
-                a = 0;
+                a = 0,
+                urlCount = 0;
             
             //@todo check if chached allready
             for(i = 0; i < rawData.length; i++) {
+                var woodUrls = [];
                 wood = rawData[i];
                 for (a=0;a<wood.longi;a++) {
-					urls.push(woodsUrl + wood.id + '/longi/' + a + '.jpg');
+                    woodUrls.push(woodsUrl + wood.id + '/longi/' + a + '.jpg');
 				}
 				for (a=0;a<wood.profile;a++) {
-					urls.push(woodsUrl + wood.id + '/profile/' + a + '.jpg');
+                    woodUrls.push(woodsUrl + wood.id + '/profile/' + a + '.jpg');
 				}
 				for (a=0;a<wood.bark;a++) {
-					urls.push(woodsUrl + wood.id + '/bark/' + a + '.jpg');
+                    woodUrls.push(woodsUrl + wood.id + '/bark/' + a + '.jpg');
 				}
-                urls.push(woodsUrl + wood.id + '/thumbs/bark.jpg');
+                woodUrls.push(woodsUrl + wood.id + '/thumbs/bark.jpg');
+                var rawWood = {
+                    name: wood.name_de,
+                    urls: woodUrls
+                };
+                woods.push(rawWood);
             }
-            function cacheFile(url) {
-                console.log('cahcing file %s', url);
+            function cacheFile(name, url, urlCount) {
                 ImgCache.cacheFile(url, function prog() {
                     progressValue++
-                    progress(progressValue / urls.length, url);
-                    if ( progressValue / urls.length >= 1) {
+                    progress(progressValue / urlCount, 'working on ' + name);
+                    if ( progressValue / urlCount >= 1) {
                         success();
                     }
                 }, function error(e,b) {
                     progressValue++;
-                    progress(progressValue / (urls.length), e);
+                    progress(progressValue / (urlCount), e);
                 },function(pe) {
                     //@todo eventual load bar per image
                     if(pe.lengthComputable) {
@@ -229,9 +234,14 @@ angular.module("BvK.services", [])
                     }
                 });
             }
-            for(i = 0; i < urls.length; i++) {
+            urlCount = woods.reduce(function(acc, wood) {
+                return acc + wood.urls.length;
+            }, 0);
+            for(i = 0; i < woods.length; i++) {
                 //download file to local storage
-                cacheFile(urls[i]);
+                for(j = 0; j < woods[i].urls.length; j++) {
+                    cacheFile(woods[i].name, woods[i].urls[j], urlCount);
+                }
             }
         }
     
