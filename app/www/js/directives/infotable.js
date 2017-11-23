@@ -11,12 +11,12 @@ angular.module('BvK')
 		scope: {
 			infos: '=',
 		},
-		template: 	'<table class="info-table">' +
-                        '<tr ng-repeat="(key, value) in infos">' +
-                            '<td>{{value.name}}</td>' +
-                            '<td>{{value.value}}</td>' +
-                        '</tr>' +
-                    '</table>'
+		template: 	'<div class="info-table">' +
+                        '<div class="info-value" ng-repeat="(key, value) in infos">' +
+                            '<div class="value-name">{{value.name}}</div>' +
+                            '<div class="value-content">{{value.value}}</div>' +
+						'</div>' +
+                    '</div>'
 	};
 	return directiveDefinitionObject;
 });
