@@ -1,16 +1,18 @@
 angular.module("BvK.services")
     .factory('fileSystem', function ($http, $window) {
 
-        function writeFile(fileEntry, dataObj) {
+        function writeFile(fileEntry, dataObj, success, error) {
             // Create a FileWriter object for our FileEntry (log.txt).
             fileEntry.createWriter(function (fileWriter) {
         
                 fileWriter.onwriteend = function() {
+                    if(typeof success === "function") success();
                     console.log("Successful file write...");
-                    readFile(fileEntry);
+                    // readFile(fileEntry);
                 };
         
                 fileWriter.onerror = function (e) {
+                    if(typeof error === "function") error();
                     console.log("Failed file write: " + e.toString());
                 };
         
@@ -25,8 +27,7 @@ angular.module("BvK.services")
         }
 
         return {
-            createFile: function (path, data, success) {
-
+            createFile: function (path, data, success, error) {
                 path = path.split(/[/\\]/g);
                 var dir = path.slice(0, path.length-1).join('/') + '/';
                 var fileName = path[path.length-1];
@@ -35,9 +36,11 @@ angular.module("BvK.services")
                     fs.root.getDirectory(dir, { create: true }, function(dirEntry) {
                         dirEntry.getFile(fileName, { create: true, exclusive: false }, function (fileEntry) {
                             writeFile(fileEntry, data, function() {
-                                success();
+                                if(typeof success === "function") success();
+                            }, function() {
+                                if(typeof error === "function") error(arguments);
                             });
-    
+
                         }, function(e) {
                             console.error('error writing to file %s', fileName, e)
                         });
@@ -49,7 +52,7 @@ angular.module("BvK.services")
                 });
             },
             unzip: function (path, targetDir, success, progCallback) {
-                zip.unzip(path, targetDir, success, progressCallback);
+                zip.unzip(path, targetDir, success, progCallback);
             }
         }
     });

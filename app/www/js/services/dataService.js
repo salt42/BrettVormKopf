@@ -281,8 +281,12 @@ angular.module("BvK.services", [])
                     console.log(data);
                     var path = '/data/zip.zip';
                     fileSystem.createFile(path, data, function() {
-                        console.log('created file %d', dir);
-                        // fileSystem.unzip()
+                        console.log('created file %d', arguments);
+                        fileSystem.unzip(path, "/data/", function() {
+                            console.log("unzipped");
+                        }, function() {
+                            console.log("[Unzipping]: ", arguments)
+                        })
 
                     });
                 });
