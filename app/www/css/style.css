@@ -101,7 +101,6 @@ ion-item.item-complex > a.activated {
 
 infotable {
     height: 100%;
-    padding-top: 16px;
 }
 infotable .info-table {
     width: 100%;
@@ -126,10 +125,11 @@ infotable .info-table .value-content {
     padding: 10px 13px;
 }
 infotable .info-table .value-name {
-    background-color: var(--header-bg);
+    background-color: var(--pane-bg);
     text-align: right;
     flex: 0 0 120px;
     font-weight: 600;
+    border-right: 2px solid var(--font-color);
 }
 infotable .info-table .value-content {
     background-color: var(--pane-bg);

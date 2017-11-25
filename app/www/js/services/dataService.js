@@ -1,5 +1,5 @@
 angular.module("BvK.services", [])
-	.factory('woodGrabber', function($http) {
+	.factory('woodGrabber', function($http, fileSystem) {
 		var _woodsData,
             _woods = null,
             _rawData = null,
@@ -41,9 +41,32 @@ angular.module("BvK.services", [])
 			}
 			return false;
 		}
-		function grabFromServer() {
+		function grabJSONFromServer() {
             return $.getJSON(serverUrl + 'woodsData.json');
-		}
+        }
+        function grabDataFromServer(success) {
+
+            var prom = new Promise(function(resolve, reject) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', serverUrl + 'bark.zip', true);
+                xhr.responseType = 'blob';
+
+                xhr.onload = function(e) {
+                    if (this.status == 200) {
+                        // get binary data as a response
+                        var blob = this.response;
+                        resolve(blob);
+                    } else {
+                        reject(arguments);
+                    }
+                };
+
+                xhr.send();
+            });
+
+            return prom;
+
+        }
         function woodTypeName(type) {
             switch(type) {
                 case 0:
@@ -250,6 +273,22 @@ angular.module("BvK.services", [])
             init: function(success, progress, error) {
                 //if online update data if needed -> prepareData
                 //if offline and no offlineData -> error
+
+                
+                console.log('init');
+                grabDataFromServer()
+                .then(function(data) {
+                    console.log(data);
+                    var path = '/data/zip.zip';
+                    fileSystem.createFile(path, data, function() {
+                        console.log('created file %d', dir);
+                        // fileSystem.unzip()
+
+                    });
+                });
+                return;
+
+
                 var progValue = 0.02;
                 //pseudo load for nice load screen
                 function pseudoLoad(succses, progress) {
@@ -269,7 +308,7 @@ angular.module("BvK.services", [])
                     tick();
                 }
                 progress(progValue, "Waiting for response from server...");
-                grabFromServer()
+                grabJSONFromServer()
                 .success(function(data,name,e) {
                     progValue += 0.04;
                     progress(progValue, "Talking to server...");
@@ -332,7 +371,7 @@ angular.module("BvK.services", [])
                     offlineData:false,
                     error:false
                 };
-                grabFromServer()
+                grabJSONFromServer()
                 .success(function(e) {
                     state.online = true;
                     if (!_rawData) {
@@ -368,4 +407,4 @@ angular.module("BvK.services", [])
 			},
 		};
 
-	});
+    });
