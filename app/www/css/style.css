@@ -6,6 +6,7 @@ body, html {
     --pane-bg: #7EA656;
     --pane-bg-sec: #BFAE99;
     --pane-bg-tri: #2e3c20;
+    --bottom-nav-height: calc(100vh - 175px);
 }
 
 
@@ -167,12 +168,9 @@ imagecarousel {
     height: 100%;
 }
 imagecarousel .wrapper {
-    height: calc(100vh - 100px);
+    height: var(--bottom-nav-height);
 }
 .question-images imagecarousel .button-overlay {
-    bottom:130px;
-    height:100px;
-    width:240px;
     overflow: visible;
 }
 imagecarousel .slider{
@@ -202,7 +200,7 @@ imagecarousel .img-desc {
     padding: 21px 21px;
     height: 80px;
     position: absolute;
-    bottom: 0;
+    top: 0;
     width: 100%;
     z-index: 1;
     background-color: rgba(255, 255, 255, 0.3);
@@ -218,7 +216,7 @@ imagecarousel .images {
 }
 imagecarousel .img-container {
 	display: none;
-	height: calc(100vh - 100px);
+	height: var(--bottom-nav-height);
 }
 imagecarousel .ionic-scroll {
 	height: 100%;
@@ -268,7 +266,10 @@ imagecarousel .button-overlay {
     position: absolute;
     left: 0;
     width: 100vw;
-    height: calc(100vh - 100px);
+    height: var(--bottom-nav-height);
+}
+.hidden .button-overlay {
+    display: none;
 }
 .button-overlay .button {
     position: absolute;
@@ -326,8 +327,12 @@ imagecarousel .button-overlay {
 /* question page */
 .answer-box {
     width: 100%;
+    height: 130px;
     position: absolute;
-    bottom: 10px;
+    left: 0;
+    bottom: 0;
+    background: var(--control-bg);
+    
 }
 .question-wood-images {
 	height: calc(100% - 115px);
@@ -336,36 +341,44 @@ imagecarousel .button-overlay {
 	display: none;
 }
 .multiple-choice-answer-list {
-	float:left;
-	width: 70%;
-	padding: 0 0 0 2.5%;
 }
 .multiple-choice-answer {
-/*	height: 40px;*/
+    height: calc(130px / 2.94);
+    padding: 0;
+    text-align: center;
+    color: var(--font-color);
+    background: none;
+    border: 0;
+    border-top: 1px solid white;
+
 }
 .multiple-choice-answer .item-content {
-	padding: 5px;
+	padding: 10px;
 }
 .multiple-choice-answer .radio-icon {
 	padding: 0 10px 0 0;
 	float: right;
 }
 
-#infoButton {
-	display: none;
+#infoButton,
+#nextButton {
+    display: none;
 	white-space: nowrap;
 	float: right;
 	width: 25%;
-	min-height: 20px;
-	margin-right: 2.5%;
+    position: absolute;
+    top: 0;
+    transform: translateY(-102%);
+    z-index: 2;
+    color: var(--font-color);
+    background-color: var(--control-bg);
+    border: 0;
+}
+#infoButton {
+    left: 0;
 }
 #nextButton {
-	display: none;
-	white-space: nowrap;
-	float: right;
-	width: 25%;
-	min-height: 20px;
-	margin-right: 2.5%;
+    right: 0;
 }
 
 /* training conf page */
