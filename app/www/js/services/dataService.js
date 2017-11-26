@@ -109,12 +109,11 @@ angular.module("BvK.services", [])
             }
         };
 
-        function generateUrls(data) {
+        function generateUrls(data, baseUrl) {
             //iterate and generate image urls
             var woods = [],
                 wood = null,
-                i = 0,
-                woodsUrl = "file:///data/data/de.salt.brettvormkopf/files/files/data/img/woods/";
+                i = 0;
 
             for(var x = 0; x < data.length; x++) {
                 //iterate over woods and create image urls
@@ -122,7 +121,7 @@ angular.module("BvK.services", [])
                 wood.URLacross = [];
                 wood.URLprofile = [];
                 wood.URLbark = [];
-                wood.preview = woodsUrl + wood.id + '/thumbs/bark.jpg';
+                wood.preview = baseUrl + wood.id + '/thumbs/bark.jpg';
 
                 wood.properties = [];
 
@@ -158,19 +157,33 @@ angular.module("BvK.services", [])
                 });
 
                 for (i = 0; i < wood.longi; i++) {
-                    wood.URLacross.push(woodsUrl + wood.id + '/longi/' + i + '.jpg');
+                    wood.URLacross.push(baseUrl + wood.id + '/longi/' + i + '.jpg');
                 }
                 for (i = 0; i < wood.profile; i++) {
-                    wood.URLprofile.push(woodsUrl + wood.id + '/profile/' + i + '.jpg');
+                    wood.URLprofile.push(baseUrl + wood.id + '/profile/' + i + '.jpg');
                 }
                 for (i = 0; i < wood.bark; i++) {
-                    wood.URLbark.push(woodsUrl + wood.id + '/bark/' + i + '.jpg');
+                    wood.URLbark.push(baseUrl + wood.id + '/bark/' + i + '.jpg');
                 }
             }
         }
     
 		return {
             init: function(success, progress, error) {
+                if (true) { //browser
+                    $.ajax({
+                        dataType: "json",
+                        url: "/data/woodsData.json",
+                        // data: data,
+                        success: function(data) {
+                            console.log("loaded", data);
+                            generateUrls(data, "/data/img/woods/");
+                            saveData(data, data);
+                            success();
+                        }
+                    });
+                    return;
+                }
                 if (_woodsData.offline) {
                     //data already loaded
                     //@todo progress("prepare data")?
@@ -183,7 +196,7 @@ angular.module("BvK.services", [])
                         // build image urls
                         var data = JSON.parse(data);
                         var rawData = data.slice();
-                        generateUrls(data);
+                        generateUrls(data, "file:///data/data/de.salt.brettvormkopf/files/files/data/img/woods/");
                         saveData(data, rawData);
 
                         success();
