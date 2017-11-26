@@ -10,26 +10,28 @@ angular.module('BvK')
 			random: '=',
             control: '=',
 		},
-		template: 	'<div class="wrapper"><div class="button-overlay">' +
-						'<div class="button up ion-arrow-up-b" ng-click="moveTypeImages(-1)"></div>' +
-						'<div class="button down ion-arrow-down-b" ng-click="moveTypeImages(1)"></div>' +
-						'<div class="button left" ng-click="moveType(-1)">left</div>' +
-						'<div class="button right" ng-click="moveType(1)">right</div>' +
-					'</div>' +
-					'<ion-slide-box delegate-handle="imageSlides" show-pager="false" drag-content="drag" active-slide="activeSlide" on-slide-changed="slideHasChanged($index)" does-continue="true" show-pager="true">' +
-						'<ion-slide ng-repeat="image in images" ng-init="typeId = $index" class="image-type">' +
-							'<div class="img-desc"><span>{{image.name}}</span> ' +
-							'<span class="img-counter">{{image.current}} / {{image.count}}</span></div>' +
-							'<div class="across-images images">' +
-								'<div ng-repeat="imgURl in image.urls" class="img-container">' +
-									'<ion-scroll on-scroll="updateScrollStatus(typeId,$index)" on-release="updateScrollStatus(typeId,$index)" zooming="true" min-zoom="1" direction="xy" delegate-handle="image-{{typeId}}-{{$index}}">' +
-										'<img ng-src="{{imgURl}}" class="blaaa">' +
-									'</ion-scroll>' +
-								'</div>' +
-							'</div>' +
-						'</ion-slide>' +
-					'</ion-slide-box></div>',
-    	link: function postLink(scope) {            
+        template: '<div class="button-overlay">' +
+                        '<div class="button up ion-arrow-up-b" ng-click="moveTypeImages(-1)"></div>' +
+                        '<div class="button down ion-arrow-down-b" ng-click="moveTypeImages(1)"></div>' +
+                        '<div class="button left" ng-click="moveType(-1)">left</div>' +
+                        '<div class="button right" ng-click="moveType(1)">right</div>' +
+                    '</div>' +
+                    '<div class="imagecarousel wrapper">' +
+                        '<ion-slide-box delegate-handle="imageSlides" show-pager="false" drag-content="drag" active-slide="activeSlide" on-slide-changed="slideHasChanged($index)" does-continue="true" show-pager="true">' +
+                            '<ion-slide ng-repeat="image in images" ng-init="typeId = $index" class="image-type">' +
+                                '<div class="img-desc"><span>{{image.name}}</span> ' +
+                                '<span class="img-counter">{{image.current}} / {{image.count}}</span></div>' +
+                                '<div class="across-images images">' +
+                                    '<div ng-repeat="imgURl in image.urls" class="img-container">' +
+                                        '<ion-scroll on-scroll="updateScrollStatus(typeId,$index)" on-release="updateScrollStatus(typeId,$index)" zooming="true" min-zoom="1" direction="xy" delegate-handle="image-{{typeId}}-{{$index}}">' +
+                                            '<img ng-src="{{imgURl}}" class="blaaa">' +
+                                        '</ion-scroll>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</ion-slide>' +
+                        '</ion-slide-box>' + 
+                    '</div>',
+    	link: function postLink(scope) {
 			scope.$watch("images", function(images) {
                 if (!images)
                     return;
