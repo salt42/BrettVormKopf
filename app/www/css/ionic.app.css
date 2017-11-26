@@ -5022,7 +5022,6 @@ ion-tabs.tabs-color-active-dark .tab-item {
 /* If you change this, change platform.scss as well */
 .tabs-top > .tabs,
 .tabs.tabs-top {
-  top: 44px;
   padding-top: 0;
   background-position: bottom;
   border-top-width: 0;
@@ -7595,12 +7594,6 @@ input:checked + .checkbox-icon:after {
   /* hide any radio button inputs elements (the ugly circles) */
   position: absolute;
   left: -9999px; }
-  .item-radio input:checked + .radio-content .item-content {
-    /* style the item content when its checked */
-    background: #f7f7f7; }
-  .item-radio input:checked + .radio-content .radio-icon {
-    /* show the checkmark icon when its checked */
-    visibility: visible; }
 
 /**
  * Range

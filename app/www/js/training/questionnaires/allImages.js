@@ -125,12 +125,11 @@ angular.module("BvK.training.questionnaires")
                         if (item.value == value){
 //                            //nur der ausgewählte in der richtigen farbe
                             if (item.rightAnswer) {
-                                answerNodes[i].style.color = "green";
+                                // answerNodes[i].style.color = "green";
+                                answerNodes[i].classList.add('is-correct-answer');
                             } else {
-                                answerNodes[i].style.color = "red";
+                                answerNodes[i].classList.add('is-wrong-answer');
                             }
-                        } else if(answered) {
-                            answerNodes[i].style.color = "red";
                         }
                     }
                 };
