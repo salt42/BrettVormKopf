@@ -42,7 +42,7 @@ angular.module("BvK.services", [])
 			return false;
 		}
 		function grabFromServer() {
-            return $.getJSON(serverUrl + 'woodsData.json');
+            return $.getJSON(serverUrl + 'woodsDataSmall.json');
 		}
         function woodTypeName(type) {
             switch(type) {

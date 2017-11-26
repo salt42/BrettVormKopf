@@ -137,6 +137,9 @@ infotable .info-table .value-content {
     height: 60px;
     padding: 0;
 }
+.tab-content {
+    top: 60px;
+}
 
 .tabs .tab-item {
     background-color: var(--control-bg);
