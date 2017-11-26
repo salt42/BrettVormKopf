@@ -3,15 +3,18 @@ angular.module("BvK.services", [])
 		var _woodsData,
             _woods = null,
             _rawData = null,
+            debug = false,
             // serverUrl = 'http://bvk.salt.bplaced.net/data/',
             serverUrl = 'http://9tbass.de/bvk/data/',
             // serverUrl = 'http://localhost:8080/data/',
             woodsUrl = serverUrl + 'img/woods/';
-    
-    //localStorage.setItem("woodsData", null);
+
+		if (debug) {
+            localStorage.setItem("woodsData", null);
+        }
         _woodsData = JSON.parse(localStorage.getItem("woodsData") );
         //first time init data structure
-        if (_woodsData == null || !("offline" in _woodsData)) {
+        if (_woodsData === null) {
             var dataTemplate = {
                 offline: false,
                 data: {
@@ -22,14 +25,11 @@ angular.module("BvK.services", [])
             localStorage.setItem("woodsData", JSON.stringify(dataTemplate));
             _woodsData = dataTemplate;
         }
-    
-        function setOffline() {
-            _woodsData.offline = true;
-            localStorage.setItem("woodsData", JSON.stringify(_woodsData));
-        }
+
         function saveData(prepared, raw) {
             _woodsData.data.prepared = prepared;
             _woodsData.data.raw = raw;
+            _woodsData.offline = true;
             localStorage.setItem("woodsData", JSON.stringify(_woodsData));
         }
 		function getByID(data, id) {
@@ -44,28 +44,32 @@ angular.module("BvK.services", [])
 		function grabJSONFromServer() {
             return $.getJSON(serverUrl + 'woodsData.json');
         }
-        function grabDataFromServer(success) {
-
-            var prom = new Promise(function(resolve, reject) {
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', serverUrl + 'bark.zip', true);
-                xhr.responseType = 'blob';
-
-                xhr.onload = function(e) {
-                    if (this.status == 200) {
-                        // get binary data as a response
-                        var blob = this.response;
-                        resolve(blob);
-                    } else {
-                        reject(arguments);
-                    }
-                };
-
-                xhr.send();
-            });
-
-            return prom;
-
+        function grabDataFromServer(success, progress, error) {
+            //@todo use server url from variable
+            fileSystem.download("http://192.168.0.32:8080/data/data.zip", "/download/data.zip",
+                function onSuccess() {
+                    // unzipping
+                    fileSystem.unzip('/download/data.zip', "/data", function onSuccessError(state, err) {
+                        if (state < 0) {
+                            error("Error while unzipping ", err);
+                            return;
+                        }
+                        //@todo remove download folder
+                        success();
+                    }, function onProgress(e) {
+                        //progress for unzipping
+                        //add the download progress, +0.5
+                        progress(e.loaded / (e.total * 2) + 0.5, "unzipping");
+                    });
+                },
+                function onProgress(e) {
+                    //progress for downloading
+                    progress(e.loaded / (e.total * 2), "downloading");
+                },
+                function onError(e) {
+                    error("Error while downloading ", e);
+                }
+            );
         }
         function woodTypeName(type) {
             switch(type) {
@@ -87,105 +91,6 @@ angular.module("BvK.services", [])
                     return "Fakultative";
             }
         }
-		function prepareData(data, callBack) {
-			var x = 0,
-				i,
-				wood,
-				imageName,
-                count = 0,
-                max = 0;
-
-            var called = false;
-                        
-            function setCachedUrl(onlineUrl, targetArray) {
-                if (_woodsData.offline) {
-                    ImgCache.getCachedFileURL(onlineUrl, function(url, localUrl) {
-                        count++;
-                        if (localUrl) {
-                            targetArray.push(localUrl);
-                        } else {
-                        }
-                        checkReady();
-                    });
-                } else {
-                    targetArray.push(onlineUrl);
-                    count++;
-                }
-            }
-            function checkReady() {
-                if (count >= max) {
-                    callBack(data);
-                    called = true;
-                }
-            }
-            function cachedPrev(woodId) {
-                if (_woodsData.offline) {
-                    ImgCache.getCachedFileURL(data[woodId].preview, function(url, localUrl) {
-                        count++;
-                        data[woodId].preview = localUrl;
-                    });
-                } else {
-                    count++;
-                }
-            }
-            for(x = 0; x < data.length; x++) {
-                max += data[x].longi + data[x].profile + data[x].bark + 1;
-            }
-			for(x = 0; x < data.length; x++) {
-				//iterate over woods and create image urls
-				wood = data[x];
-				wood.URLacross = [];
-				wood.URLprofile = [];
-				wood.URLbark = [];
-                wood.preview = woodsUrl + wood.id + '/thumbs/bark.jpg';
-                cachedPrev(wood.id);
-                wood.properties = [];
-                 
-                wood.properties.push({
-                        name: "Deutsch",
-                        value: wood.name_de
-                        });
-                wood.properties.push({
-                            name: "Botanisch",
-                            value: wood.name_bo
-                        });
-                wood.properties.push({
-                            name: "Holzart",
-                            value: woodTypeName(wood.woodtype)
-                        });
-                wood.properties.push({
-                            name: "Kernholz",
-                            value: heartwoodTypeName(wood.heartwood)
-                        });
-                wood.properties.push({
-                            name: "Holz",
-                            value: wood.m_holz
-                        });
-                if (wood.m_frisch != "") {
-                    wood.properties.push({    
-                                name: "Frischholz",
-                                value: wood.m_frisch
-                        });
-                }
-                wood.properties.push({
-                            name: "Rinde",
-                            value: wood.m_rinde
-                        });
-        
-				for (i=0;i<wood.longi;i++) {
-					imageName = woodsUrl + wood.id + '/longi/' + i + '.jpg';
-                    setCachedUrl(imageName, wood.URLacross);
-				}
-				for (i=0;i<wood.profile;i++) {
-					imageName = woodsUrl + wood.id + '/profile/' + i + '.jpg';
-                    setCachedUrl(imageName, wood.URLprofile);
-				}
-				for (i=0;i<wood.bark;i++) {
-					imageName = woodsUrl + wood.id + '/bark/' + i + '.jpg';
-                    setCachedUrl(imageName, wood.URLbark);
-                }
-			}
-		}
 		function hasData(callBack) {
             if (_woodsData.data.raw != "") {
                 callBack(_woodsData.data.prepared);
@@ -203,171 +108,93 @@ angular.module("BvK.services", [])
                 return true;
             }
         };
-        function useOfflineData() {
-            var data = JSON.parse(localStorage.getItem("woods"));
-            if (Array.isArray(data) && data.length > 0) {
-                _woods = data;
-                return true;
-            }
-            return false;
-        }
-    
-        function cacheImages(rawData, success, progress, error) {
+
+        function generateUrls(data) {
+            //iterate and generate image urls
             var woods = [],
-                progressValue = 0,
-                wood,
+                wood = null,
                 i = 0,
-                a = 0,
-                urlCount = 0;
-            
-            //@todo check if chached allready
-            for(i = 0; i < rawData.length; i++) {
-                var woodUrls = [];
-                wood = rawData[i];
-                for (a=0;a<wood.longi;a++) {
-                    woodUrls.push(woodsUrl + wood.id + '/longi/' + a + '.jpg');
-				}
-				for (a=0;a<wood.profile;a++) {
-                    woodUrls.push(woodsUrl + wood.id + '/profile/' + a + '.jpg');
-				}
-				for (a=0;a<wood.bark;a++) {
-                    woodUrls.push(woodsUrl + wood.id + '/bark/' + a + '.jpg');
-				}
-                woodUrls.push(woodsUrl + wood.id + '/thumbs/bark.jpg');
-                var rawWood = {
-                    name: wood.name_de,
-                    urls: woodUrls
-                };
-                woods.push(rawWood);
-            }
-            function cacheFile(name, url, urlCount) {
-                ImgCache.cacheFile(url, function prog() {
-                    progressValue++
-                    progress(progressValue / urlCount, 'working on ' + name);
-                    if ( progressValue / urlCount >= 1) {
-                        success();
-                    }
-                }, function error(e,b) {
-                    progressValue++;
-                    progress(progressValue / (urlCount), e);
-                },function(pe) {
-                    //@todo eventual load bar per image
-                    if(pe.lengthComputable) {
-                        //console.log("dsa", pe.total, pe.loaded)
-                    }
+                woodsUrl = "file:///data/data/de.salt.brettvormkopf/files/files/data/img/woods/";
+
+            for(var x = 0; x < data.length; x++) {
+                //iterate over woods and create image urls
+                wood = data[x];
+                wood.URLacross = [];
+                wood.URLprofile = [];
+                wood.URLbark = [];
+                wood.preview = woodsUrl + wood.id + '/thumbs/bark.jpg';
+
+                wood.properties = [];
+
+                wood.properties.push({
+                    name: "Deutsch",
+                    value: wood.name_de
                 });
-            }
-            urlCount = woods.reduce(function(acc, wood) {
-                return acc + wood.urls.length;
-            }, 0);
-            for(i = 0; i < woods.length; i++) {
-                //download file to local storage
-                for(j = 0; j < woods[i].urls.length; j++) {
-                    cacheFile(woods[i].name, woods[i].urls[j], urlCount);
+                wood.properties.push({
+                    name: "Botanisch",
+                    value: wood.name_bo
+                });
+                wood.properties.push({
+                    name: "Holzart",
+                    value: woodTypeName(wood.woodtype)
+                });
+                wood.properties.push({
+                    name: "Kernholz",
+                    value: heartwoodTypeName(wood.heartwood)
+                });
+                wood.properties.push({
+                    name: "Holz",
+                    value: wood.m_holz
+                });
+                if (wood.m_frisch !== "") {
+                    wood.properties.push({
+                        name: "Frischholz",
+                        value: wood.m_frisch
+                    });
+                }
+                wood.properties.push({
+                    name: "Rinde",
+                    value: wood.m_rinde
+                });
+
+                for (i = 0; i < wood.longi; i++) {
+                    wood.URLacross.push(woodsUrl + wood.id + '/longi/' + i + '.jpg');
+                }
+                for (i = 0; i < wood.profile; i++) {
+                    wood.URLprofile.push(woodsUrl + wood.id + '/profile/' + i + '.jpg');
+                }
+                for (i = 0; i < wood.bark; i++) {
+                    wood.URLbark.push(woodsUrl + wood.id + '/bark/' + i + '.jpg');
                 }
             }
         }
-    
     
 		return {
             init: function(success, progress, error) {
-                //if online update data if needed -> prepareData
-                //if offline and no offlineData -> error
-
-                
-                console.log('init');
-                grabDataFromServer()
-                .then(function(data) {
-                    console.log(data);
-                    var path = '/data/zip.zip';
-                    fileSystem.createFile(path, data, function() {
-                        console.log('created file %d', arguments);
-                        fileSystem.unzip(path, "/data/", function() {
-                            console.log("unzipped");
-                        }, function() {
-                            console.log("[Unzipping]: ", arguments)
-                        })
-
-                    });
-                });
-                return;
-
-
-                var progValue = 0.02;
-                //pseudo load for nice load screen
-                function pseudoLoad(succses, progress) {
-                    var count = 2,
-                        max = 20;
-
-                    function tick() {
-                        count++;
-                        if (count < max) {
-                            progress(count/max);
-                            setTimeout(tick, 20);
-                        } else {
-                            progress(1);
-                            succses();
-                        }
-                    }
-                    tick();
+                if (_woodsData.offline) {
+                    //data already loaded
+                    //@todo progress("prepare data")?
+                    //@todo success();
                 }
-                progress(progValue, "Waiting for response from server...");
-                grabJSONFromServer()
-                .success(function(data,name,e) {
-                    progValue += 0.04;
-                    progress(progValue, "Talking to server...");
-                    //compareData -> update
-                    if (_woodsData.data.raw) {
-                        //gleich -> use offline (tun nichts)
-                        pseudoLoad(
-                            function() {
-                                success();
-                            },
-                            function(prog) {
-                                progValue += prog;
-                                progress(prog, "Preparing woody data...");
-                            }
-                        );
-                    } else {
-                        progValue += 0.04;
-                        progress(progValue, "Fetching data from server (only the first time).");
-                        //cache data
-                        cacheImages(data,
-                            function succ() {
-                                setOffline(true);
-                                prepareData(data, function(prepared){
-                                    saveData(prepared, data);
-                                    success(prepared);
-                                });
-                            },
-                            function prog(value, url) {
-                                progress(value*0.9 + progValue, url);
-                            },
-                            function error(err) {
-                                console.log(err);
-                                error(err);
-                            }
-                        );
-                    }
-                })
-                .error(function(e) {
-                    if(_woodsData.data.raw != "") {
-                        pseudoLoad(
-                            function() {
-                                success();
-                            },
-                            function() {
-                                progValue += 0.02;
-                                progress(progValue, "load data from cache.");
-                            }
-                        );
-                    } else {
-                        //@todo error handling
-                        error("msg");
-                    }
-                });
+                progress(0, "Waiting for response from server...");
+                grabDataFromServer(function onSuccess() {
+                    // load json
+                    fileSystem.readFile("/data/woodsData.json", function(data) {
+                        // build image urls
+                        var data = JSON.parse(data);
+                        var rawData = data.slice();
+                        generateUrls(data);
+                        saveData(data, rawData);
+
+                        success();
+                    });
+                }, function onProgress(percent, job) {
+                    progress(percent, job);
+                }, error);
             },
+            //@todo deprecated
             checkState: function(callBack) {
+                console.log("deprecated");
                 var state = {
                     online:false,
                     up2data:true,
@@ -396,7 +223,9 @@ angular.module("BvK.services", [])
                     callBack(state);
                 });
             },
+            //@todo deprecated
             isOffline: function() {
+                console.log("deprecated");
                 return _offline;
             },
 			getWoods: function(callBack) {

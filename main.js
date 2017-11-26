@@ -1,8 +1,8 @@
 var express = require('express'),
     app = express(),
     fs = require('fs');
-    ip = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1",
-    port = parseInt(process.env.OPENSHIFT_NODEJS_PORT) || 8080;
+    ip = "192.168.0.32",
+    port = 8080;
 
 
 app.use(function(req, res, next) {
@@ -14,5 +14,6 @@ app.use(function(req, res, next) {
 //app.use('/', express.static(__dirname + '/app/www'));
 app.use('/data', express.static(__dirname + '/data'));
 
-app.listen(port, ip);
-console.log("app started on port " + port)
+app.listen(port, ip, function () {
+    console.log("app started on port %s:%s", ip, port);
+});

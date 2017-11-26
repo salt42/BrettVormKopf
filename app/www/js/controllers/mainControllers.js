@@ -37,7 +37,7 @@ angular.module('BvK.controllers', [])
 //    tick();
     document.addEventListener('imageCacheReady', function(e) {
         woodGrabber.init(
-            function success(data) {
+            function success() {
                 $state.go($state.get('app.woods'), {});
             },
             function progress(percent, job) {
