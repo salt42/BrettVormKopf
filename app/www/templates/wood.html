@@ -1,14 +1,23 @@
-<ion-view title="Wood">
-	<ion-nav-buttons side="left">
-		<button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-	</ion-nav-buttons>
-	<ion-content class="has-header" scroll="false">
-		<h1 class="wood-name">{{Wood.name_de}}</h1>
-		<button id="openImages" class="button button-balanced" ng-click="switch()">Bilder</button>
-		<hr style="clear:both;">
-		<div ng-include="'templates/woodDescription.html'"></div>
-		<div class="wood-images">
-			<imageswitch wood-id="Wood.id" random="false"></imageswitch>
-		</div>
+<ion-view title="Wood" view-title="{{Wood.name_de}}">
+    <ion-nav-buttons side="left">
+      <button class="button-back button button-icon button-clear button-royal ion-chevron-left" ng-click="backToWoods()">
+        Woods
+      </button>
+    </ion-nav-buttons>
+    <ion-content class="has-header" scroll="false">
+        <ion-tabs class="tabs-icon-top tabs-positive">
+            <ion-tab title="Info" icon-on="ion-clipboard" icon-off="ion-clipboard">
+                <ion-content>
+                    <infotable class="wood-properties" infos="Wood.properties" style="display:block;"></infotable>
+                </ion-content>
+            </ion-tab>
+            <ion-tab title="Bilder" icon-on="ion-images" icon-off="ion-images">
+                <ion-content>
+                    <div class="wood-images">
+                        <imagecarousel style="height: 800px;" images="Wood.images" random="true"></imagecarousel>
+                    </div>
+                </ion-content>
+            </ion-tab>
+        </ion-tabs>
 	</ion-content>
 </ion-view>

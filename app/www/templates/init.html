@@ -1,0 +1,35 @@
+<ion-view view-title="Update" hide-nav-bar="true" cache-view="false" class="scroll-view">
+	<ion-content scroll="false">
+        <div style="position: absolute; top:50%; left:50%; margin: -150px 0 0 -150px; width: 300px; height: 310px;">
+            <img style="position: absolute;width:300px; z-index: 0;" src="img/loadTreeBg.png">
+            <img style="position: absolute;width:300px; z-index: 2;" src="img/loadTreeOverlay.png">
+            <div class="initLoadbar">
+              <progress-arc
+                style="position: absolute; z-index: 1;"
+                size="299"
+                stroke="#568173"
+                complete="(progress || 0)"
+                stroke-width="170"
+                counter-clockwise="true">
+                </progress-arc>
+            </div>
+
+            <div style="text-align: center;
+                        font-size: 10px;
+                        color: #000;
+                        top: 270px;
+                        position: relative;
+                        z-index: 5;">
+                {{ progressPercent }}%
+            </div>
+            <div style="text-align: center;
+                        font-size: 10px;
+                        color: #000;
+                        top: 268px;
+                        position: relative;
+                        z-index: 5;">
+                {{ lastJob }}
+            </div>
+        </div>
+	</ion-content>
+</ion-view>

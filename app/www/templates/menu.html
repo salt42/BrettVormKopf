@@ -1,36 +1,25 @@
-<ion-side-menus>
+<ion-side-menus enable-menu-with-back-views="true">
+  <ion-side-menu-content >
+        <ion-nav-bar class="bar-stable nav-title-slide-ios7">
+          <ion-nav-buttons side="right">
+            <button class="button button-icon button-clear ion-navicon button-royal" menu-toggle="right">
+            </button>
+          </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="mainContent"></ion-nav-view>
+  </ion-side-menu-content>
 
-	<ion-side-menu-content 
-		edge-drag-threshold="true"
-		drag-content="true">
-		<ion-nav-bar class="bar-stable nav-title-slide-ios7">
-			<ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>
-		</ion-nav-bar>
-		<ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
-	</ion-side-menu-content>
-
-  <ion-side-menu side="left">
-    <header class="bar bar-header bar-stable">
+  <ion-side-menu side="right">
+    <ion-header-bar class="bar-stable">
       <h1 class="title">Menu</h1>
-    </header>
-    <ion-content class="has-header">
+    </ion-header-bar>
+    <ion-content>
       <ion-list>
-<!--
-        <ion-item nav-clear menu-close ng-click="login()">
-          Login
+        <ion-item menu-close href="#/app/woods">
+          <span class="menu-item">Woods</span>
         </ion-item>
--->
-        <ion-item nav-clear menu-close href="#/app/woods">
-          Woods
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/training">
-          Training
-        </ion-item>
-        <!--<ion-item nav-clear menu-close href="#/app/search">
-          Search
-        </ion-item>-->
-        <ion-item nav-clear menu-close href="#/app/stats">
-          Statistik
+        <ion-item menu-close href="#/app/question">
+          <span class="menu-item">Training</span>
         </ion-item>
       </ion-list>
     </ion-content>

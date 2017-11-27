@@ -4,22 +4,53 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if(window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
+var imageCacheReadyEvent = new Event('imageCacheReady');
+
+function initImageChache() {
+    ImgCache.options.debug = false;
+    ImgCache.options.usePersistentCache = true;
+    ImgCache.options.chromeQuota = 120*1024*1024;
+    ImgCache.init(function() {
+        setTimeout(function() {
+            document.dispatchEvent(imageCacheReadyEvent);
+        }, 30);
+    });
+}
+if (typeof(cordova) !== 'undefined') {
+    // cordova test
+    document.addEventListener('deviceready', initImageChache, false);
+} else {
+    // normal browser test
+    initImageChache();
+}
+
+angular.module('BvK', ['ionic', 'angular-progress-arc', 'jett.ionic.filter.bar', "BvK.controllers", "BvK.services", 'BvK.training'])
+.config( function( $compileProvider, $ionicConfigProvider ) {   
+//    $ionicConfigProvider.views.maxCache(0);
+    $ionicConfigProvider.views.transition('none');
+    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|filesystem):|data:image\//);//  |filesystem:chrome-extension:
+    // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
 })
-
+.run(function($ionicPlatform, $ionicPopup) {
+    $ionicPlatform.ready(function() {
+        if (window.Connection && navigator.connection.type === Connection.NONE) {
+            $ionicPopup.confirm({
+                title: "Internet Disconnected",
+                content: "The internet is disconnected on your device. Please Connect and restart the App"
+            })
+                .then(function (result) {
+                    if (!result) {
+                        ionic.Platform.exitApp();
+                    }
+                });
+        }
+        if(window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            StatusBar.styleDefault();
+        }
+    });
+})
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('app', {
@@ -28,70 +59,63 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       templateUrl: "templates/menu.html",
       controller: 'AppCtrl'
     })
-    .state('app.home', {
-        url: "/home",
-        views: {
-          'menuContent' : {
-            templateUrl: "templates/home.html",
-            controller: 'HomeCtrl'
-          }
-        }
-      })
-    .state('app.woods', {
-      url: "/woods",
+    .state('app.init', {
+      url: "/init",
       views: {
-        'menuContent' : {
-          templateUrl: "templates/woods.html",
-          controller: 'WoodsCtrl'
-        }
-      }
-    })
-    .state('app.wood', {
-      url: "/woods/:woodid",
-      views: {
-        'menuContent' : {
-          templateUrl: "templates/wood.html",
-          controller: 'WoodCtrl'
+        'mainContent' : {
+            templateUrl: "templates/init.html",
+            controller: "InitCtrl"
         }
       }
     })
     .state('app.training', {
       url: "/training",
+      cache: false,
       views: {
-        'menuContent' : {
-          templateUrl: "templates/training.html",
-		  controller: 'TrainingCtrl'
+        'mainContent' : {
+            templateUrl: "templates/training.html",
+            controller: 'TrainingCtrl'
         }
       }
     })
     .state('app.question', {
-      url: "/question/",
+        url: "/question",
+        cache: false,
+        views: {
+          'mainContent' : {
+            templateUrl: "templates/question.html",
+            controller: 'QuestionCtrl'
+          }
+        }
+      })
+    .state('app.woods', {
+      url: "/woods",
+      cache: false,
       views: {
-        'menuContent' : {
-          templateUrl: "templates/question.html",
-		  controller: 'QuestionCtrl'
+        'mainContent' : {
+          templateUrl: "templates/woods.html",
+          controller: "WoodsCtrl"
         }
       }
     })
-    .state('app.search', {
-      url: "/search",
+    .state('app.wood', {
+      url: "/woods/:woodid",
+      cache: false,
       views: {
-        'menuContent' : {
-          templateUrl: "templates/search.html"
+        'mainContent' : {
+          templateUrl: "templates/wood.html",
+          controller: 'WoodCtrl'
         }
       }
     })
-  	.state('app.stats', {
-      url: "/stats",
+    .state('app.exit', {
+      url: "/exit",
       views: {
-        'menuContent' : {
-          templateUrl: "templates/stats.html",
-          controller: 'StatsCtrl'
+        'mainContent' : {
+          templateUrl: "templates/exit.html",
+          controller: "ExitCtrl"
         }
       }
     });
-	
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/home');
+  $urlRouterProvider.otherwise('/app/init');
 });
-

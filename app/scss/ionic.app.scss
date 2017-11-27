@@ -1,3 +1,20 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
@@ -5,21 +22,22 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Colors
 // -------------------------------
 
-$light:                           #a9a9a9 !default;
-$stable:                          #868686 !default;
-$positive:                        #4a87ee !default;
-$calm:                            #43cee6 !default;
-$balanced:                        #66cc33 !default;
+$light:                           #E3AD48 !default;
+$stable:                          #E3AD48 !default;//nav bar    868686
+$positive:                        #5B8761 !default;
+$calm:                            #568173 !default;
+$royal:                           #9C7E46 !default;
+
+$balanced:                        #CFE352 !default;//fail
 $energized:                       #f0b840 !default;
-$assertive:                       #ef4e3a !default;
-$royal:                           #8a6de9 !default;
-$dark:                            #444 !default;
+$assertive:                       #ef4e3a !default;//fail
+$dark:                            #444444 !default;
 
 
 // Base
 // -------------------------------
 
-$base-background-color:           #676767 !default;
+$base-background-color:           $calm !default; //#676767
 $base-color:                      #e2e2e2 !default;
 
 
@@ -92,11 +110,11 @@ $button-default-active-border:    $button-stable-active-border !default;
 // Menus
 // -------------------------------
 
-$menu-bg:                         $base-background-color !default;
+$menu-bg:                         $positive !default;
 $menu-width:                      275px !default;
 $menu-animation-speed:            200ms !default;
 
-$menu-side-shadow:                -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0,0,0,0.2) !default;
+$menu-side-shadow:                -1px 0px 15px rgba(0, 0, 0, 0.5), 1px 0px 2px rgba(0,0,0,0.2) !default;
 
 
 // Items
@@ -134,7 +152,9 @@ $item-default-active-bg:          $light !default;
 
 // Include all of Ionic
 @import "../www/lib/ionic/scss/ionic";
-
+.pane {
+    background-color: $base-background-color;
+}
 .item-radio input {
   /* hide any radio button inputs elements (the ugly circles) */
   position: absolute;
@@ -153,4 +173,106 @@ $item-default-active-bg:          $light !default;
 .item-complex .item-content,
 .item-radio .item-content {
 //  background-color: $stable;
+}
+//header back button size, on wood state
+
+ion-header-bar .button-back:before {
+    font-size: 17px !important;
+}
+/* data-table*/
+infotable .info-table {
+    width:98%;
+    margin: 0 auto 0 auto;
+    font-size: 16px;
+}
+infotable .info-table tr:nth-child(even){
+    background-color: $calm;
+}
+infotable .info-table tr:nth-child(odd){
+    background-color: $positive;
+}
+infotable .info-table td {
+    border-bottom: 1px solid #fff;
+    padding: 4px;
+    white-space: pre-wrap;
+}
+infotable .info-table td:nth-child(1) {
+    width: 110px;
+    font-weight: bold;
+    border-right: 1px double rgba(100, 100, 130, .5);
+}
+
+infotable .info-table td:nth-child(2) {
+    color: rgb(240, 243, 248);
+}
+/* end data-table*/
+ion-item.item {
+    background-color: transparent;
+    border: 1px #000;
+}
+//odd
+ion-item.item-complex:nth-child(odd) > a {
+    background-color: $calm !important;
+}
+ion-item.item-complex:nth-child(odd) > a.activated {
+    background-color: $royal !important;
+}
+
+//even
+ion-item.item-complex:nth-child(even) > a {
+    background-color: $positive !important;
+}
+ion-item.item-complex:nth-child(even) > a.activated {
+    background-color: $royal !important;
+}
+progress-arc {
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.1s linear;
+}
+.initLoadbar progress-arc {
+    stroke-linecap: inherit;
+    transition: stroke-dashoffset 0.1s linear;
+}
+.tabs-top > .tabs, .tabs.tabs-top {
+    top: auto;
+    bottom: 0px;
+    padding-top: auto;
+    background-position: bottom;
+    border-top-width: 0;
+    border-bottom-width: 1px;
+}
+.scroll{height: 100%;}
+
+imagecarousel.hidden .wrapper{
+    height:0px;
+    overflow:hidden
+}
+
+//popup override
+.popup {
+    background: $dark !important;
+}
+
+.popup-head {
+    background: $dark !important;
+}
+
+.popup-title {
+    
+}
+
+.popup-sub-title {
+    
+}
+
+.popup-body {
+    background: $dark !important;
+}
+
+.popup-buttons.row {
+    
+}
+
+.popup-buttons .button {
+    
 }

@@ -1,14 +1,17 @@
 /* generel */
 body, html {
-	height: 100%;
+    height: 100%;
+    --header-bg: #8C765A;
+    --font-color: #f5f4f9;
+    --pane-bg: #7EA656;
+    --pane-bg-sec: #BFAE99;
 }
-ion-side-menu {
-	background-color: #222;
-}
+
 
 /* main page */
 ion-item.item-complex {
     color: #e0e0e0;
+    padding: 8px 0;
 }
 ion-item.item-complex .name-de {
     font-weight: bold;
@@ -28,82 +31,197 @@ ion-item.item-complex img {
     padding-right: 10px;
 }
 ion-item.item-complex span {
-    border-left: 1px double rgba(100, 100, 130, .5) !important;
     padding-left: 10px;
 }
-ion-item.item-complex:nth-child(odd) > a{
-    background-color: rgb(70, 70, 77) !important;
+.wood-tile .item-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    padding: 0 16px;
 }
-ion-item.item-complex:nth-child(even) > a{
-    background-color: rgb(84, 84, 93) !important;
+.wood-thumbnail-wrapper,
+.wood-statistics-wrapper {
+    flex: 0 0 50px;
+    overflow: hidden;
+}
+.wood-statistics-wrapper {
+    position: relative;
+}
+.wood-statistics-wrapper svg {
+    margin-top: 4px;
+}
+.wood-statistics-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.wood-name-wrapper {
+    flex: 5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 7px;
+}
+.wood-thumbnail {
+    min-height: 50px;
+    min-width: 50px;
 }
 /* end main page */
 
-/* imageswitch */
-imageswitch .button-overlay {
-	position: absolute;
-	z-index: 100;
+/* bar */
+ion-header-bar.bar,
+ion-header-bar.bar.bar-stable,
+ion-filter-bar .bar.bar-stable {
+    background: var(--header-bg);
+    color: var(--font-color);
 }
-imageswitch .slider{
+.bar.bar-stable .title,
+.bar.bar-stable .button,
+.bar.bar-stable button {
+  color: #f5f4f9;
+}
+/* end bar */
+
+.pane {
+    background-color: var(--pane-bg);
+}
+
+.pane.has-tabs {
+    background-color: var(--header-bg);
+}
+ion-item.item-complex > a {
+}
+ion-item.item-complex > a.activated {
+    background-color: var(--header-bg);
+}
+
+.scroll-content.ionic-scroll {
+}
+
+infotable {
+    height: 100%;
+}
+infotable .info-table {
+    width: 100%;
+    height: 100%;
+    background-color: var(--header-bg);
+    display: flex;
+    flex-direction: column;
+}
+infotable .info-table .info-value {
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+}
+infotable .info-table .info-value:first-child > div {
+    padding-top: 24px;
+}
+infotable .info-table .info-value:last-child {
+    flex: 1;
+}
+infotable .info-table .value-name,
+infotable .info-table .value-content {
+    padding: 10px 13px;
+}
+infotable .info-table .value-name {
+    background-color: var(--pane-bg);
+    text-align: right;
+    flex: 0 0 120px;
+    font-weight: 600;
+    border-right: 2px solid var(--font-color);
+}
+infotable .info-table .value-content {
+    background-color: var(--pane-bg);
+    flex: 2;
+}
+
+.tabs-positive > .tabs {
+    border: 0;
+    background: none;
+}
+.tabs.tab-nav {
+    height: 66px;
+    padding: 0;
+}
+
+.tabs .tab-item {
+    background-color: var(--header-bg);
+    color: var(--font-color);
+    font-size: 15px;
+    padding: 10px 0;
+    max-width: none;
+    opacity: 1;
+}
+
+.tabs-icon-top > .tabs .tab-item.tab-item-active,
+.tabs-icon-top > .tabs .tab-item.activated {
+    background-color: var(--pane-bg);
+}
+    
+.tabs-striped.tabs-positive .tabs {
+    background-color: var(--header-bg);
+    height: 60px;
+}
+
+/* imagecarousel */
+imagecarousel {
+/*    position: relative;*/
+    height: 100%;
+}
+.question-images imagecarousel .button-overlay {
+    bottom:130px;
+    height:100px;
+    width:240px;
+    overflow: visible
+}
+imagecarousel .slider{
 	height: 100%;
-	overflow: scroll;
+	overflow: hidden;
 }
-imageswitch ion-slide {
+imagecarousel ion-slide {
+    height: 100%;
 	width: 100%;
 	text-align: center;
 }
-imageswitch img{
-	margin: 0 2.5% 0 2.5%;
-	max-height: 95%;
-	max-width: 95%;
+imagecarousel .image-type {
+    height: 100%;
 }
-imageswitch .images {
+imagecarousel img {
+	max-height: 100%;
+	max-width: 100%;
+}
+imagecarousel .img-desc {
+    padding-bottom: 4px;
+    text-align: left;
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+imagecarousel .img-counter {
+    float: right;
+}
+imagecarousel .images {
 	height: 100%;
-	width: 100%;
+    width: 100%;
 }
-imageswitch .img-container {
+imagecarousel .img-container {
 	display: none;
 	height: calc(100% - 20px);
 }
-imageswitch .ionic-scroll {
+imagecarousel .ionic-scroll {
+	height: 100%;
+    overflow: visible;
+}
+imagecarousel .scroll {
 	height: 100%;
 }
-imageswitch .scroll {
-	height: 100%;
+imagecarousel .scroll-bar {
+	display: none;
 }
 /* end imageswitch */
 
-/* wood-data-table used multiple times */
-.wood-data-table {
-    margin: 0 auto 0 auto;
-	font-size: 16px;
-}
-.wood-data-table tr:nth-child(even){
-    background-color: rgb(70, 70, 77);
-}
-.wood-data-table tr:nth-child(odd){
-    background-color: rgb(84, 84, 93);
-}
-.wood-data-table td {
-	border-bottom: 1px solid #fff;
-    padding: 4px;
-}
-.wood-data-table td:nth-child(1) {
-	width: 110px;
-    font-weight: bold;
-    border-right: 1px double rgba(100, 100, 130, .5);
-}
-
-.wood-data-table td:nth-child(2) {
-    color: rgb(240, 243, 248);
-}
-
 
 /* wood page */
-
-ion-view.pane {
-    background-color: rgb(70, 70, 77) !important;
-}
 ion-view.pane .wood-name {
     margin: 7px;
     font-weight: bold;
@@ -114,7 +232,7 @@ ion-view.pane .wood-name {
     margin: 5px 3px;
     padding: 0px 4px;
     font-weight: bold;
-    color: #e0e0e0;
+    color: #000;
     background-color: rgb(84, 84, 93) !important;
     border: 2px solid rgb(185, 185, 198) !important;
 }
@@ -125,52 +243,77 @@ ion-view.pane .wood-images {
 }
 /* end wood page */
 
+/* menu */
+.menu-item {
+    color: var(--font-color);
+}
+
 /* start wood images button-overlay */
 
-.button-overlay {
+imagecarousel .button-overlay {
     position: absolute;
+    bottom: 27px;
+    left: -16px;
+    height: 120px;
+    width: 100vw;
     pointer-events: none;
-    width: 100%;
-    top: 0px;
-    bottom: 140px;
+	z-index: 100;
+}
+.button-overlay {
+    margin: 0 auto;
 }
 .button-overlay .button {
     position: absolute;
     text-align: center;
-    width: 78px;
-    height: 40px;
     font-weight: bold;
     color: #e0e0e0;
-    background-color: rgb(84, 84, 93) !important;
-    border: 2px solid rgb(185, 185, 198) !important;
+    background-color: var(--header-bg);
+    border: 0;
     overflow: hide;
+    border-radius: 0;
+}
+.button-overlay .button.activated {
+    border: 0;
 }
 .button-overlay .button.right {
+    position: absolute;
     pointer-events: all;
-    right: 20px;
-    bottom: 25px;
+    right: 0;
+    width: 20%;
+    height: 120px;
+    padding-top: 30px;
 }
 
 .button-overlay .button.left {
+    position: absolute;
     pointer-events: all;
-    right: 154px;
-    bottom: 25px;
+    left: 0;
+    width: 20%;
+    height: 120px;
+    padding-top: 30px;
 }
 
 .button-overlay .button.up {
+    position: absolute;
     pointer-events: all;
-    right: 100px;
-    bottom: 50px;
+    left: 20vw;
+    top: 0;
+    width: 60vw;
     font-size: 2em;
-    width: 30px;
+    width: 60%;
+    height: 60px;
+    border: 0;
 }
 
 .button-overlay .button.down {
+    position: absolute;
     pointer-events: all;
-    right: 100px;
-    bottom: 0px;
     font-size: 2em;
-    width: 30px;
+    bottom: 0;
+    left: 20vw;
+    width: 60%;
+    height: 60px;
+    border: 0;
 }
 
 @media (max-width: 950px) {
@@ -195,6 +338,11 @@ ion-view.pane .wood-images {
 /* end training page */
 
 /* question page */
+.answer-box {
+    width: 100%;
+    position: absolute;
+    bottom: 10px;
+}
 .question-wood-images {
 	height: calc(100% - 115px);
 }
@@ -216,12 +364,7 @@ ion-view.pane .wood-images {
 	padding: 0 10px 0 0;
 	float: right;
 }
-@media screen and (max-height: 1900px) {
-	/* smaller than 300px */
-	.multiple-choice-answer {
-/*		display: none;*/
-	}
-}
+
 #infoButton {
 	display: none;
 	white-space: nowrap;
@@ -245,4 +388,9 @@ ion-view.pane .wood-images {
 	left: 50%;
 	bottom: 10px;
 	transform: translate(-50%);
+}
+
+.popup,
+.popup h3 {
+    color: #4e4e4e;
 }
