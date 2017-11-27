@@ -1,10 +1,13 @@
 /* generel */
 body, html {
     height: 100%;
-    --header-bg: #8C765A;
+    --control-bg: #8C765A;
     --font-color: #f5f4f9;
+    --font-color-dark: #565656;
     --pane-bg: #7EA656;
     --pane-bg-sec: #BFAE99;
+    --pane-bg-tri: #2e3c20;
+    --bottom-nav-height: calc(100vh - 175px);
 }
 
 
@@ -73,8 +76,9 @@ ion-item.item-complex span {
 ion-header-bar.bar,
 ion-header-bar.bar.bar-stable,
 ion-filter-bar .bar.bar-stable {
-    background: var(--header-bg);
+    background: var(--control-bg);
     color: var(--font-color);
+    border: 0;
 }
 .bar.bar-stable .title,
 .bar.bar-stable .button,
@@ -87,13 +91,8 @@ ion-filter-bar .bar.bar-stable {
     background-color: var(--pane-bg);
 }
 
-.pane.has-tabs {
-    background-color: var(--header-bg);
-}
-ion-item.item-complex > a {
-}
 ion-item.item-complex > a.activated {
-    background-color: var(--header-bg);
+    background-color: var(--control-bg);
 }
 
 .scroll-content.ionic-scroll {
@@ -105,7 +104,7 @@ infotable {
 infotable .info-table {
     width: 100%;
     height: 100%;
-    background-color: var(--header-bg);
+    background-color: var(--pane-bg);
     display: flex;
     flex-direction: column;
 }
@@ -125,15 +124,12 @@ infotable .info-table .value-content {
     padding: 10px 13px;
 }
 infotable .info-table .value-name {
-    background-color: var(--pane-bg);
     text-align: right;
     flex: 0 0 120px;
     font-weight: 600;
-    border-right: 2px solid var(--font-color);
 }
 infotable .info-table .value-content {
-    background-color: var(--pane-bg);
-    flex: 2;
+    flex: 1;
 }
 
 .tabs-positive > .tabs {
@@ -141,48 +137,57 @@ infotable .info-table .value-content {
     background: none;
 }
 .tabs.tab-nav {
-    height: 66px;
+    height: 60px;
     padding: 0;
+}
+.tab-content {
+    top: 60px;
 }
 
 .tabs .tab-item {
-    background-color: var(--header-bg);
+    background-color: var(--control-bg);
     color: var(--font-color);
     font-size: 15px;
     padding: 10px 0;
     max-width: none;
     opacity: 1;
+    transition: flex .2s;
 }
 
 .tabs-icon-top > .tabs .tab-item.tab-item-active,
 .tabs-icon-top > .tabs .tab-item.activated {
     background-color: var(--pane-bg);
+    flex: 2;
 }
     
 .tabs-striped.tabs-positive .tabs {
-    background-color: var(--header-bg);
+    background-color: var(--control-bg);
     height: 60px;
 }
 
 /* imagecarousel */
 imagecarousel {
-/*    position: relative;*/
     height: 100%;
 }
+imagecarousel .wrapper {
+    height: var(--bottom-nav-height);
+}
 .question-images imagecarousel .button-overlay {
-    bottom:130px;
-    height:100px;
-    width:240px;
-    overflow: visible
+    overflow: visible;
 }
 imagecarousel .slider{
 	height: 100%;
 	overflow: hidden;
 }
-imagecarousel ion-slide {
+imagecarousel ion-slide.slider-slide {
     height: 100%;
 	width: 100%;
-	text-align: center;
+    text-align: center;
+}
+imagecarousel ion-scroll .scroll {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 imagecarousel .image-type {
     height: 100%;
@@ -192,13 +197,20 @@ imagecarousel img {
 	max-width: 100%;
 }
 imagecarousel .img-desc {
-    padding-bottom: 4px;
     text-align: left;
     font-size: 20px;
-    margin-bottom: 16px;
+    padding: 21px 21px;
+    height: 80px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.3);
+    font-size: 24px;
 }
 imagecarousel .img-counter {
     float: right;
+    font-size: 20px;
 }
 imagecarousel .images {
 	height: 100%;
@@ -206,7 +218,8 @@ imagecarousel .images {
 }
 imagecarousel .img-container {
 	display: none;
-	height: calc(100% - 20px);
+    height: var(--bottom-nav-height);
+    margin-top: 4px;
 }
 imagecarousel .ionic-scroll {
 	height: 100%;
@@ -238,8 +251,10 @@ ion-view.pane .wood-name {
 }
 
 ion-view.pane .wood-images {
-	/*margin-top: 50px;*/
-	height: calc(100% - 115px);
+    /*margin-top: 50px;*/
+}
+ion-view.pane .images-tab {
+    position: relative;
 }
 /* end wood page */
 
@@ -252,74 +267,49 @@ ion-view.pane .wood-images {
 
 imagecarousel .button-overlay {
     position: absolute;
-    bottom: 27px;
-    left: -16px;
-    height: 120px;
+    left: 0;
     width: 100vw;
-    pointer-events: none;
-	z-index: 100;
+    height: var(--bottom-nav-height);
 }
-.button-overlay {
-    margin: 0 auto;
+.hidden .button-overlay {
+    display: none;
 }
 .button-overlay .button {
     position: absolute;
-    text-align: center;
-    font-weight: bold;
-    color: #e0e0e0;
-    background-color: var(--header-bg);
+    pointer-events: all;
+    color: var(--font-color);
+    background-color: transparent;
+    opacity: 0.7;
     border: 0;
-    overflow: hide;
-    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
 }
 .button-overlay .button.activated {
-    border: 0;
 }
 .button-overlay .button.right {
-    position: absolute;
-    pointer-events: all;
     right: 0;
-    width: 20%;
-    height: 120px;
-    padding-top: 30px;
+    height: 70%;
+    top: 15%;
 }
 
 .button-overlay .button.left {
-    position: absolute;
-    pointer-events: all;
     left: 0;
-    width: 20%;
-    height: 120px;
-    padding-top: 30px;
+    height: 70%;
+    top: 15%;
 }
 
 .button-overlay .button.up {
-    position: absolute;
-    pointer-events: all;
-    left: 20vw;
-    top: 0;
-    width: 60vw;
-    font-size: 2em;
-    width: 60%;
-    height: 60px;
-    border: 0;
+    top: 87px;
+    width: 100%;
+    height: 30px;
 }
 
 .button-overlay .button.down {
-    position: absolute;
-    pointer-events: all;
-    font-size: 2em;
-    bottom: 0;
-    left: 20vw;
-    width: 60%;
-    height: 60px;
-    border: 0;
-}
-
-@media (max-width: 950px) {
-    .button-overlay {
-        display: none;
-    }
+    bottom: 87px;
+    width: 100%;
+    height: 30px;
 }
 
 /* end wood images button-overlay */
@@ -340,8 +330,12 @@ imagecarousel .button-overlay {
 /* question page */
 .answer-box {
     width: 100%;
+    height: 130px;
     position: absolute;
-    bottom: 10px;
+    left: 0;
+    bottom: 0;
+    background: var(--control-bg);
+    
 }
 .question-wood-images {
 	height: calc(100% - 115px);
@@ -350,36 +344,71 @@ imagecarousel .button-overlay {
 	display: none;
 }
 .multiple-choice-answer-list {
-	float:left;
-	width: 70%;
-	padding: 0 0 0 2.5%;
 }
 .multiple-choice-answer {
-/*	height: 40px;*/
+    height: calc(130px / 2.94);
+    padding: 0;
+    text-align: center;
+    color: var(--font-color);
+    background: none;
+    border: 0;
+    border-top: 1px solid white;
+
 }
 .multiple-choice-answer .item-content {
-	padding: 5px;
+	padding: 10px;
 }
 .multiple-choice-answer .radio-icon {
 	padding: 0 10px 0 0;
 	float: right;
 }
 
-#infoButton {
-	display: none;
+.item-radio input:checked + .radio-content {
+    background-color: white;
+    color: var(--font-color-dark);
+}
+.item-radio.is-wrong-answer input:checked + .radio-content {
+    color: red;
+    background-color: white;
+}
+.item-radio.is-correct-answer input:checked + .radio-content {
+    color: var(--pane-bg);
+    background-color: white;
+}
+.item-radio.is-wrong-answer input + .radio-content {
+    background-color: rgba(255, 0, 0, 0.4);
+    color: white;
+}
+.item-radio.is-correct-answer input + .radio-content {
+    background-color: var(--pane-bg);
+}
+.item-radio.is-correct-answer input + .radio-content .radio-icon {
+    visibility: visible;
+}
+
+.item-radio.is-correct-answer input:checked + .radio-content .ion-checkmark:before {
+    color: var(--pane-bg);
+}
+
+#infoButton,
+#nextButton {
+    display: none;
 	white-space: nowrap;
 	float: right;
 	width: 25%;
-	min-height: 20px;
-	margin-right: 2.5%;
+    position: absolute;
+    top: 0;
+    transform: translateY(-102%);
+    z-index: 2;
+    color: var(--font-color);
+    background-color: var(--control-bg);
+    border: 0;
+}
+#infoButton {
+    left: 0;
 }
 #nextButton {
-	display: none;
-	white-space: nowrap;
-	float: right;
-	width: 25%;
-	min-height: 20px;
-	margin-right: 2.5%;
+    right: 0;
 }
 
 /* training conf page */
