@@ -60,7 +60,7 @@ angular.module("BvK.services", [])
                     progress(e.loaded / (e.total * 2), "downloading");
                 },
                 function onError(e) {
-                    error("Error while downloading ", e);
+                    error("Error while downloading! ", e.exception);
                 }
             );
         }
@@ -153,6 +153,21 @@ angular.module("BvK.services", [])
 
 		return {
             init: function(success, progress, error) {
+                if (_woodsData.offline) {
+                    //data already loaded
+                    //@todo progress("prepare data")?
+                    progress(0, "Prepare woody data");
+                    var value = 0;
+                    var interval = setInterval(function() {
+                        if (value >= 1) {
+                            clearInterval(interval);
+                            success();
+                        } else {
+                            value += 0.05;
+                            progress(value, "Prepare woody data");
+                        }
+                    }, 100);
+                }
                 /* region for debugging purposes only*/
                 var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
                 if (!app) {
@@ -172,11 +187,6 @@ angular.module("BvK.services", [])
                     return;
                 }
                 /* endregion  for debugging purposes only */
-                if (_woodsData.offline) {
-                    //data already loaded
-                    //@todo progress("prepare data")?
-                    //@todo success();
-                }
                 progress(0, "Chopping data in the woods");
                 grabDataFromServer(function onSuccess() {
                     // load json
@@ -203,6 +213,9 @@ angular.module("BvK.services", [])
 					callBack(getByID(data, id));
 				});
 			},
+            hasData: function() {
+                return _woodsData.offline;
+            }
 		};
 
     });

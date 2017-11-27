@@ -10,6 +10,7 @@
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="*" />
+    <access origin="http://*/*" />
     <allow-intent href="*://bvk.salt.bplaced.net/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -75,4 +76,5 @@
     </plugin>
     <plugin name="cordova-plugin-file-transfer" spec="~1.7.0" />
     <plugin name="cordova-plugin-zip" spec="~3.1.0" />
+    <plugin name="cordova-plugin-whitelist" spec="~1.3.3" />
 </widget>

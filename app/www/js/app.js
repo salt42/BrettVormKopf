@@ -7,24 +7,6 @@
 
 var imageCacheReadyEvent = new Event('imageCacheReady');
 
-function initImageChache() {
-    ImgCache.options.debug = false;
-    ImgCache.options.usePersistentCache = true;
-    ImgCache.options.chromeQuota = 120*1024*1024;
-    ImgCache.init(function() {
-        setTimeout(function() {
-            document.dispatchEvent(imageCacheReadyEvent);
-        }, 30);
-    });
-}
-if (typeof(cordova) !== 'undefined') {
-    // cordova test
-    document.addEventListener('deviceready', initImageChache, false);
-} else {
-    // normal browser test
-    initImageChache();
-}
-
 angular.module('BvK', ['ionic', 'angular-progress-arc', 'jett.ionic.filter.bar', "BvK.controllers", "BvK.services", 'BvK.training'])
 .config( function( $compileProvider, $ionicConfigProvider ) {   
 //    $ionicConfigProvider.views.maxCache(0);
@@ -32,18 +14,31 @@ angular.module('BvK', ['ionic', 'angular-progress-arc', 'jett.ionic.filter.bar',
     $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|filesystem):|data:image\//);//  |filesystem:chrome-extension:
     // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
 })
-.run(function($ionicPlatform, $ionicPopup) {
+.run(function($ionicPlatform, $ionicPopup, woodGrabber) {
     $ionicPlatform.ready(function() {
-        if (window.Connection && navigator.connection.type === Connection.NONE) {
-            $ionicPopup.confirm({
-                title: "Internet Disconnected",
-                content: "The internet is disconnected on your device. Please Connect and restart the App"
-            })
-                .then(function (result) {
-                    if (!result) {
-                        ionic.Platform.exitApp();
-                    }
-                });
+        function checkConnection() {
+            if (window.Connection && navigator.connection.type === Connection.NONE) {
+                $ionicPopup.confirm({
+                    title: "Internet Disconnected",
+                    content: "The internet is disconnected on your device. Please Connect and restart the App",
+                    cancelText: 'Close App',
+                    okText: 'Retry'
+                })
+                    .then(function (result) {
+                        if (!result) {
+                            ionic.Platform.exitApp();
+                        } else {
+                            checkConnection();
+                        }
+                    });
+            } else {
+                document.dispatchEvent(imageCacheReadyEvent);
+            }
+        }
+        if (woodGrabber.hasData()) {
+            document.dispatchEvent(imageCacheReadyEvent);
+        } else {
+            checkConnection();
         }
         if(window.StatusBar) {
             // org.apache.cordova.statusbar required
@@ -117,5 +112,5 @@ angular.module('BvK', ['ionic', 'angular-progress-arc', 'jett.ionic.filter.bar',
         }
       }
     });
-  $urlRouterProvider.otherwise('/app/init');
+    $urlRouterProvider.otherwise('/app/init');
 });

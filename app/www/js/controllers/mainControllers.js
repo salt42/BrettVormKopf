@@ -4,14 +4,20 @@ angular.module('BvK.controllers', [])
 .controller('AppCtrl', function($scope, $ionicModal) {
 
 })
-.controller('InitCtrl', function($scope, $state, woodGrabber, $ionicPopup, $ionicHistory, coach) {
+.controller('InitCtrl', function($scope, $state, woodGrabber, $ionicPopup, $ionicHistory, coach, woodGrabber) {
     $scope.progress = 1;
     $scope.progressPercent = 0;
     $scope.lastJob = "";
-    
+
+
     $ionicHistory.nextViewOptions({
         disableBack: true
     });
+
+    // if (woodGrabber.hasData()) {
+    //     $state.go($state.get('app.woods'), {});
+    //     return;
+    // }
     if(coach.isReady()) {
         $state.go($state.get('app.woods'), {});
         return;
@@ -51,13 +57,15 @@ angular.module('BvK.controllers', [])
             }
         );
     }, false);
-    $scope.error = function() {
+    $scope.error = function(msg) {
+        if (window.Connection && navigator.connection.type === Connection.NONE) return;
         var alertPopup = $ionicPopup.alert({
             title: 'No Internet!',
-            template: 'Please make sure your have an internet connection established.'
+            template: msg
         });
         alertPopup.then(function(res) {
             //exit app
+            ionic.Platform.exitApp();
         });
     };
 
