@@ -102,10 +102,13 @@ angular.module("BvK.services")
                 if (typeof progress === "function") progress(progressEvent);
             };
         }
-
+        function remove(path) {
+            //@todo
+        }
         return {
             download: download,
             ls: ls,
+            remove: remove,
             readFile: function(path, success) {
                 window.requestFileSystem(window.PERSISTENT, 0, function (fs) {
                     fs.root.getFile(path, {}, function(fileEntry) {

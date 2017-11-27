@@ -1,15 +1,12 @@
 angular.module("BvK.services", [])
 	.factory('woodGrabber', function($http, fileSystem) {
 		var _woodsData,
-            _woods = null,
-            _rawData = null,
-            debug = false,
-            // serverUrl = 'http://bvk.salt.bplaced.net/data/',
-            serverUrl = 'http://9tbass.de/bvk/data/',
-            // serverUrl = 'http://localhost:8080/data/',
-            woodsUrl = serverUrl + 'img/woods/';
+            forceDataReload = false,
+            // onlineSourceUrl = 'http://9tbass.de/bvk/data.zip';
+            onlineSourceUrl = "http://192.168.0.32:8080/data/data.zip";
 
-		if (debug) {
+
+		if (forceDataReload) {
             localStorage.setItem("woodsData", null);
         }
         _woodsData = JSON.parse(localStorage.getItem("woodsData") );
@@ -41,12 +38,8 @@ angular.module("BvK.services", [])
 			}
 			return false;
 		}
-		function grabJSONFromServer() {
-            return $.getJSON(serverUrl + 'woodsData.json');
-        }
         function grabDataFromServer(success, progress, error) {
-            //@todo use server url from variable
-            fileSystem.download("http://192.168.0.32:8080/data/data.zip", "/download/data.zip",
+            fileSystem.download(onlineSourceUrl, "/download/data.zip",
                 function onSuccess() {
                     // unzipping
                     fileSystem.unzip('/download/data.zip', "/data", function onSuccessError(state, err) {
@@ -54,7 +47,7 @@ angular.module("BvK.services", [])
                             error("Error while unzipping ", err);
                             return;
                         }
-                        //@todo remove download folder
+                        fileSystem.remove("/download");
                         success();
                     }, function onProgress(e) {
                         //progress for unzipping
@@ -92,23 +85,13 @@ angular.module("BvK.services", [])
             }
         }
 		function hasData(callBack) {
-            if (_woodsData.data.raw != "") {
+            if (_woodsData.data.raw !== "") {
                 callBack(_woodsData.data.prepared);
             } else {
                 //no offline data -> download page
                 //$state.go($state.get('app.init'), {}, {reload: ''});
             }
 		}
-        function compare(a, b) {
-            if (typeof a != "string" || typeof b != "string") {
-                console.log("not a string")
-                return false
-            }
-            if (a === b) {
-                return true;
-            }
-        };
-
         function generateUrls(data, baseUrl) {
             //iterate and generate image urls
             var woods = [],
@@ -167,10 +150,14 @@ angular.module("BvK.services", [])
                 }
             }
         }
-    
+
 		return {
             init: function(success, progress, error) {
-                if (true) { //browser
+                /* region for debugging purposes only*/
+                var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+                if (!app) {
+                    // Web page
+                    console.log("dev browser mode");
                     $.ajax({
                         dataType: "json",
                         url: "/data/woodsData.json",
@@ -184,17 +171,18 @@ angular.module("BvK.services", [])
                     });
                     return;
                 }
+                /* endregion  for debugging purposes only */
                 if (_woodsData.offline) {
                     //data already loaded
                     //@todo progress("prepare data")?
                     //@todo success();
                 }
-                progress(0, "Waiting for response from server...");
+                progress(0, "Chopping data in the woods");
                 grabDataFromServer(function onSuccess() {
                     // load json
                     fileSystem.readFile("/data/woodsData.json", function(data) {
                         // build image urls
-                        var data = JSON.parse(data);
+                        data = JSON.parse(data);
                         var rawData = data.slice();
                         generateUrls(data, "file:///data/data/de.salt.brettvormkopf/files/files/data/img/woods/");
                         saveData(data, rawData);
@@ -204,42 +192,6 @@ angular.module("BvK.services", [])
                 }, function onProgress(percent, job) {
                     progress(percent, job);
                 }, error);
-            },
-            //@todo deprecated
-            checkState: function(callBack) {
-                console.log("deprecated");
-                var state = {
-                    online:false,
-                    up2data:true,
-                    dataSrc:1,//0=offline  1=online
-                    offlineData:false,
-                    error:false
-                };
-                grabJSONFromServer()
-                .success(function(e) {
-                    state.online = true;
-                    if (!_rawData) {
-                        console.log("no offline data")
-                        state.up2data = false;
-                    }
-                    if (compare(JSON.stringify(e), _rawData) ) {
-                        console.log("allready up 2 data")
-                    } else {
-                        console.log("not up 2 data")
-                        state.up2data = false;
-                    }
-                    callBack(state);
-                })
-                .error(function(e) {
-                    console.log("no internet connecting")
-                    state.error = true;
-                    callBack(state);
-                });
-            },
-            //@todo deprecated
-            isOffline: function() {
-                console.log("deprecated");
-                return _offline;
             },
 			getWoods: function(callBack) {
 				hasData(function(data) {
