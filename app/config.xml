@@ -35,6 +35,7 @@
         <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
     </feature>
     <platform name="android">
+        <hook src="hooks/after_prepare/android.js" type="after_prepare" />
         <preference name="android-minSdkVersion" value="16" />
         <preference name="LoadUrlTimeoutValue" value="5000" />
         <icon density="ldpi" src="resources\android\icon\drawable-ldpi-icon.png" />
