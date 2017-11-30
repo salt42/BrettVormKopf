@@ -168,7 +168,7 @@ angular.module("BvK.services", [])
                         }
                     }, 100);
                 }
-                /* region for debugging purposes only*/
+                /* region needed for browser support*/
                 var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
                 if (!app) {
                     // Web page
@@ -186,7 +186,7 @@ angular.module("BvK.services", [])
                     });
                     return;
                 }
-                /* endregion  for debugging purposes only */
+                /* endregion */
                 progress(0, "Chopping data in the woods");
                 grabDataFromServer(function onSuccess() {
                     // load json
@@ -214,6 +214,11 @@ angular.module("BvK.services", [])
 				});
 			},
             hasData: function() {
+                //needed for browser support
+                var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+                if (!app) {
+                    return true;
+                }
                 return _woodsData.offline;
             }
 		};

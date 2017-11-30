@@ -36,8 +36,12 @@ angular.module('BvK', ['ionic', 'angular-progress-arc', 'jett.ionic.filter.bar',
             }
         }
         if (woodGrabber.hasData()) {
-            document.dispatchEvent(imageCacheReadyEvent);
+            //timeout needed for browser support
+            setTimeout(function() {
+                document.dispatchEvent(imageCacheReadyEvent);
+            }, 500);
         } else {
+            console.log("check connection");
             checkConnection();
         }
         if(window.StatusBar) {

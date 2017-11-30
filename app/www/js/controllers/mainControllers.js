@@ -42,6 +42,7 @@ angular.module('BvK.controllers', [])
 //    }
 //    tick();
     document.addEventListener('imageCacheReady', function(e) {
+        console.log("imageCacheReady");
         woodGrabber.init(
             function success() {
                 $state.go($state.get('app.woods'), {});
