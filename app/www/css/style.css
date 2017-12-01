@@ -10,6 +10,10 @@ body, html {
     --bottom-nav-height: calc(100vh - 175px);
 }
 
+a.item-content {
+    height: 30px;
+    line-height: 30px;
+}
 
 /* main page */
 ion-item.item-complex {
