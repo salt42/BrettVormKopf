@@ -5,7 +5,7 @@
 angular.module("BvK.training.questionnaires", [])
 angular.module('BvK.training', ['BvK.training.questionnaires'])
 	.config(function() {})
-	.factory('coach', function(statistics) {
+	.factory('coach', function(statistics, woodGrabber) {
         var _level = 1,
             _dataBase;
     
@@ -160,22 +160,27 @@ angular.module('BvK.training', ['BvK.training.questionnaires'])
          *  @return {object} question qbject
          */
 		function nextQuestion() {
+		    if (!isReady()) loadData();
             _level = calcLevel();
             var d = generateQuestion();
             return d;
 		}
+		function loadData() {
+            _dataBase = woodGrabber.getWoodsSync();
+        }
+		function isReady() {
+            if (_dataBase) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 		return {
 			nextQuestion: nextQuestion,
             
 			setDataBase: function(data){
                 _dataBase = data;
             },
-            isReady: function () {
-                if (_dataBase) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+            isReady: isReady
 		};
 	});

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="1" id="de.salt.brettvormkopf" version="1.0.1">
+<widget android-versionCode="3" id="de.salt.brettvormkopf" version="1.0.3">
     <name>BrettVormKopf</name>
     <description>
       Beim Holzarten bestimmen ein "Brett vor'm Kopf"? Die App ermöglicht ein Vertiefen der Kenntnisse über makroskopische Unterscheidungsmerkmale von 30 in Deutschland heimischer Laubhölzer und der 9 wichtigsten Laubhölzer, die besonders im Forst (Studium) relevant sind.

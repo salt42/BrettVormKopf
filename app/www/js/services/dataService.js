@@ -2,8 +2,8 @@ angular.module("BvK.services", [])
 	.factory('woodGrabber', function($http, fileSystem) {
 		var _woodsData,
             forceDataReload = false,
-            // onlineSourceUrl = 'http://9tbass.de/bvk/data.zip';
-            onlineSourceUrl = "http://192.168.0.32:8080/data/data.zip";
+            onlineSourceUrl = 'http://9tbass.de/bvk/data.zip';
+            // onlineSourceUrl = "http://192.168.0.32:8080/data/data.zip";
 
 
 		if (forceDataReload) {
@@ -155,7 +155,6 @@ angular.module("BvK.services", [])
             init: function(success, progress, error) {
                 if (_woodsData.offline) {
                     //data already loaded
-                    //@todo progress("prepare data")?
                     progress(0, "Prepare woody data");
                     var value = 0;
                     var interval = setInterval(function() {
@@ -167,6 +166,7 @@ angular.module("BvK.services", [])
                             progress(value, "Prepare woody data");
                         }
                     }, 100);
+                    return;
                 }
                 /* region needed for browser support*/
                 var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
@@ -178,7 +178,6 @@ angular.module("BvK.services", [])
                         url: "/data/woodsData.json",
                         // data: data,
                         success: function(data) {
-                            console.log("loaded", data);
                             generateUrls(data, "/data/img/woods/");
                             saveData(data, data);
                             success();
@@ -196,7 +195,6 @@ angular.module("BvK.services", [])
                         var rawData = data.slice();
                         generateUrls(data, "file:///data/data/de.salt.brettvormkopf/files/files/data/img/woods/");
                         saveData(data, rawData);
-
                         success();
                     });
                 }, function onProgress(percent, job) {
@@ -208,6 +206,9 @@ angular.module("BvK.services", [])
 					callBack(data);
 				});
 			},
+            getWoodsSync: function() {
+                return _woodsData.data.prepared;
+            },
 			getWoodByID: function(id, callBack) {
 				hasData(function(data) {
 					callBack(getByID(data, id));

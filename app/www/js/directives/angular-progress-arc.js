@@ -64,10 +64,10 @@
                         'ng-attr-cx="{{size/2}}" ' +
                         'ng-attr-cy="{{size/2}}" ' +
                         'ng-attr-r="{{radius}}" ' +
-                        'ng-attr-stroke="{{background}}" ' +
                         'ng-attr-stroke-width="{{strokeWidthCapped}}"' +
                         '/>' +
                     '<circle class="ngpa-progress" fill="none" ' +
+                        'ng-attr-stroke="{{background}}" ' +
                         'ng-attr-cx="{{size/2}}" ' +
                         'ng-attr-cy="{{size/2}}" ' +
                         'ng-attr-r="{{radius}}" ' +

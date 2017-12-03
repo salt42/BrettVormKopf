@@ -4,24 +4,15 @@ angular.module('BvK.controllers', [])
 .controller('AppCtrl', function($scope, $ionicModal) {
 
 })
-.controller('InitCtrl', function($scope, $state, woodGrabber, $ionicPopup, $ionicHistory, coach, woodGrabber) {
+.controller('InitCtrl', function($scope, $state, woodGrabber, $ionicPopup, $ionicHistory, coach) {
     $scope.progress = 1;
     $scope.progressPercent = 0;
     $scope.lastJob = "";
-
 
     $ionicHistory.nextViewOptions({
         disableBack: true
     });
 
-    // if (woodGrabber.hasData()) {
-    //     $state.go($state.get('app.woods'), {});
-    //     return;
-    // }
-    if(coach.isReady()) {
-        $state.go($state.get('app.woods'), {});
-        return;
-    }
     var $safeApply = function($scope, fn) {
         fn = fn || function() {};
         if($scope.$$phase) {
@@ -42,7 +33,6 @@ angular.module('BvK.controllers', [])
 //    }
 //    tick();
     document.addEventListener('imageCacheReady', function(e) {
-        console.log("imageCacheReady");
         woodGrabber.init(
             function success() {
                 $state.go($state.get('app.woods'), {});
@@ -61,7 +51,7 @@ angular.module('BvK.controllers', [])
     $scope.error = function(msg) {
         if (window.Connection && navigator.connection.type === Connection.NONE) return;
         var alertPopup = $ionicPopup.alert({
-            title: 'No Internet!',
+            title: 'Error!',
             template: msg
         });
         alertPopup.then(function(res) {
@@ -71,16 +61,9 @@ angular.module('BvK.controllers', [])
     };
 
 })
-.controller('QuestionCtrl', function($scope, coach, $state, woodGrabber) {
-    if(!coach.isReady()) {
-        woodGrabber.getWoods(function(woods) {
-            coach.setDataBase(woods);
-            $scope.question = coach.nextQuestion();
-        });
-        //$state.go($state.get('app.training'), {}, {reload: ''});
-    } else {
-        $scope.question = coach.nextQuestion();
-    }
+.controller('QuestionCtrl', function($scope, coach, $ionicHistory) {
+    $scope.question = coach.nextQuestion();
+
     $scope.questionCallBack = function(event) {
         if (event.type === "next") {
             //next question
@@ -89,7 +72,7 @@ angular.module('BvK.controllers', [])
         }
     };
 })
-.controller('TrainingCtrl', function($scope, $state, coach, woodGrabber) {
+.controller('TrainingCtrl', function($scope, $state, $ionicHistory, coach, woodGrabber) {
     woodGrabber.getWoods(function(woods) {
         $scope.Woods = woods;
     });

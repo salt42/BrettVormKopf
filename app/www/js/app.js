@@ -25,6 +25,7 @@ angular.module('BvK', ['ionic', 'angular-progress-arc', 'jett.ionic.filter.bar',
                     okText: 'Retry'
                 })
                     .then(function (result) {
+                        console.log(result);
                         if (!result) {
                             ionic.Platform.exitApp();
                         } else {
@@ -39,9 +40,8 @@ angular.module('BvK', ['ionic', 'angular-progress-arc', 'jett.ionic.filter.bar',
             //timeout needed for browser support
             setTimeout(function() {
                 document.dispatchEvent(imageCacheReadyEvent);
-            }, 500);
+            }, 80);
         } else {
-            console.log("check connection");
             checkConnection();
         }
         if(window.StatusBar) {
